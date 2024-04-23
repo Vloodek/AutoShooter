@@ -34,7 +34,7 @@ func walk(steps):
 	
 	
 func step():
-	var target_position = position * direction
+	var target_position = position + direction
 	if borders.has_point(target_position):
 		steps_since_turn +=1
 		position = target_position
@@ -53,7 +53,6 @@ func change_direction():
 	directions.shuffle()
 	
 	direction = directions.pop_front()
-	
 	while not borders.has_point(position + direction):
 		direction = directions.pop_front()
 		

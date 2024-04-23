@@ -199,7 +199,7 @@ disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -13)
-zoom = Vector2(3.4, 3.4)
+zoom = Vector2(0.3, 0.3)
 
 [node name="gun_handler" type="Node2D" parent="."]
 position = Vector2(3, 0)
