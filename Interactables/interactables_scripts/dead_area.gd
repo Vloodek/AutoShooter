@@ -13,4 +13,4 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		player_data.health -=4
+		player_data.health -=1

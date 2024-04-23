@@ -46,7 +46,8 @@ func movement(delta):
 	if input_movement == Vector2.ZERO:
 		velocity = Vector2.ZERO
 		
-	if Input.is_action_just_pressed("ui_shoot"):
+	if Input.is_action_just_pressed("ui_shoot") && player_data.ammo > 0:
+		player_data.ammo -=1
 		instance_bullet()
 		
 		
