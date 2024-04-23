@@ -1,0 +1,8 @@
+res://Entities/Scenes/Player/player.tscn
+res://main_level.tscn
+res://Entities/Entities Scripts/player.gd
+res://Entities/Scenes/Bullets/bullet_1.tscn
+res://Entities/Entities Scripts/bullet_1.gd
+res://Entities/Entities Scripts/player_data.gd
+res://Interactables/scenes/dead_area.tscn
+res://Interactables/interactables_scripts/dead_area.gd

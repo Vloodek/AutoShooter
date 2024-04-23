@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://csj7vjqynno5n"]
+
+[ext_resource type="PackedScene" uid="uid://bht2gbifhvqbk" path="res://Entities/Scenes/Player/player.tscn" id="1_uxlkw"]
+[ext_resource type="PackedScene" uid="uid://c4lgoj5et8aj1" path="res://Interactables/scenes/dead_area.tscn" id="2_7rjen"]
+
+[node name="main_level" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_uxlkw")]
+speed = 85
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 123.0
+offset_top = -90.0
+offset_right = 163.0
+offset_bottom = 85.0
+color = Color(0.928961, 0.508577, 0.391921, 1)
+
+[node name="dead_area" parent="." instance=ExtResource("2_7rjen")]
+position = Vector2(62, 55)

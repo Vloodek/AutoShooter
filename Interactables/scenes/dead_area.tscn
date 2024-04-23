@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4lgoj5et8aj1"]
+
+[ext_resource type="Script" path="res://Interactables/interactables_scripts/dead_area.gd" id="1_fk3c8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v225m"]
+size = Vector2(40, 40)
+
+[node name="dead_area" type="Area2D"]
+z_index = -1
+y_sort_enabled = true
+collision_layer = 4
+script = ExtResource("1_fk3c8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_v225m")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

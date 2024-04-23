@@ -1,0 +1,10 @@
+ColorRect
+CollisionShape2D
+Area2D
+VisibleOnScreenNotifier2D
+Sprite2D
+Marker2D
+Node2D
+Camera2D
+AnimationPlayer
+CharacterBody2D
