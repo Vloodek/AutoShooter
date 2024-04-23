@@ -7,3 +7,4 @@ res://Entities/Entities Scripts/player_data.gd
 res://Interactables/scenes/dead_area.tscn
 res://Interactables/interactables_scripts/dead_area.gd
 res://UI/ui_scripts/GUI.gd
+res://Levels/level_generator_scripts/walker.gd
