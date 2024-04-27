@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhvud3xvwngx"]
+
+[ext_resource type="Script" path="res://Interactables/interactables_scripts/ammo_1.gd" id="1_jgmsa"]
+[ext_resource type="Texture2D" uid="uid://dmy251bek1nx6" path="res://Sprites/ammo.png" id="1_xxenv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqngp"]
+
+[sub_resource type="Animation" id="Animation_5ufnw"]
+resource_name = "Active"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_av2d4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vnhw0"]
+_data = {
+"Active": SubResource("Animation_5ufnw"),
+"RESET": SubResource("Animation_av2d4")
+}
+
+[node name="ammo_1" type="Area2D"]
+y_sort_enabled = true
+script = ExtResource("1_jgmsa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("1_xxenv")
+hframes = 5
+frame = 1
+
+[node name="ammo_colider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dqngp")
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vnhw0")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

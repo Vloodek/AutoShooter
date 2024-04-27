@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvb8qnr672hdy"]
+[gd_scene load_steps=12 format=3 uid="uid://bvb8qnr672hdy"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/enemy_1.gd" id="1_2kqfc"]
 [ext_resource type="Texture2D" uid="uid://bvaya7kx1kyd4" path="res://Sprites/enemy_rpg.png" id="1_7dr0y"]
@@ -99,10 +99,21 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3aup4"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dphnk"]
+size = Vector2(42.5, 42.5)
+
 [node name="enemy_1" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(0.64, 0.64)
+collision_layer = 32
+collision_mask = 8
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_2kqfc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("1_7dr0y")
 hframes = 5
 vframes = 4
@@ -116,7 +127,25 @@ libraries = {
 }
 
 [node name="hitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
 
 [node name="hitbox_collider" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("RectangleShape2D_3aup4")
 debug_color = Color(0.741037, 0.416132, 0.560041, 0.42)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="chase_box" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chase_box"]
+shape = SubResource("RectangleShape2D_dphnk")
+debug_color = Color(0.185523, 0.0931787, 0.00388406, 0.42)
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="chase_box" to="." method="_on_chase_box_area_entered"]

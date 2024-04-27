@@ -202,7 +202,7 @@ disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -13)
-zoom = Vector2(0.4, 0.4)
+zoom = Vector2(3.4, 3.4)
 
 [node name="gun_handler" type="Node2D" parent="."]
 position = Vector2(3, 0)
@@ -213,3 +213,9 @@ texture = ExtResource("3_uuing")
 
 [node name="bullet_point" type="Marker2D" parent="gun_handler"]
 position = Vector2(11, 0)
+
+[node name="trail_timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]

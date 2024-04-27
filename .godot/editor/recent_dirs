@@ -1,6 +1,7 @@
+res://Entities/Scenes/FX
 res://Entities/Entities Scripts
-res://Entities/Scenes/Enemies
 res://Interactables/scenes
+res://Entities/Scenes/Enemies
 res://Interactables/interactables_scripts
 res://Levels/level_generator_scripts
 res://UI/ui_scripts

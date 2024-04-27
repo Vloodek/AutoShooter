@@ -1,26 +1,36 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1714185986
+::res://::1714203075
 icon.svg::CompressedTexture2D::1311239764282031588::1713848255::1713848261::1::::<><>::
-main_level.tscn::PackedScene::6056800896633225337::1713919915::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>uid://bht2gbifhvqbk::::res://Entities/Scenes/Player/player.tscn<>uid://c4lgoj5et8aj1::::res://Interactables/scenes/dead_area.tscn<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://cv1smvwj2lp2x::::res://Sprites/complex_tilemap_16px.png
+main_level.tscn::PackedScene::6056800896633225337::1714203075::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>uid://c4lgoj5et8aj1::::res://Interactables/scenes/dead_area.tscn<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://cv1smvwj2lp2x::::res://Sprites/complex_tilemap_16px.png
 ::res://Entities/::1713850434
-::res://Entities/Entities Scripts/::1713863765
-bullet_1.gd::GDScript::-1::1713859396::0::1::::<>Area2D<>::
+::res://Entities/Entities Scripts/::1714202965
+bullet_1.gd::GDScript::-1::1714202965::0::1::::<>Area2D<>::
 player.gd::GDScript::-1::1713863735::0::1::::<>CharacterBody2D<>::
 player_data.gd::GDScript::-1::1713863765::0::1::::player_data<>Node<>::
-::res://Entities/Scenes/::1713856841
-::res://Entities/Scenes/Bullets/::1713919916
-bullet_1.tscn::PackedScene::5027328062542402874::1713919916::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
-::res://Entities/Scenes/Player/::1713919916
-player.tscn::PackedScene::2918615905173748260::1713919916::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>uid://dmncs68l1eedp::::res://Sprites/Player_metroid.png<>uid://bau0xyy1434si::::res://Sprites/gun_1.png
+enemy_1.gd::GDScript::-1::1714202723::0::1::::<>CharacterBody2D<>::
+fx_scene.gd::GDScript::-1::1714202597::0::1::::<>Node2D<>::
+::res://Entities/Scenes/::1714202595
+::res://Entities/Scenes/Bullets/::1714203075
+bullet_1.tscn::PackedScene::5027328062542402874::1714203075::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
+::res://Entities/Scenes/Enemies/::1714203075
+enemy_1.tscn::PackedScene::3864483721827169810::1714203075::0::1::::<><>::res://Entities/Entities Scripts/enemy_1.gd<>uid://bvaya7kx1kyd4::::res://Sprites/enemy_rpg.png
+::res://Entities/Scenes/FX/::1714203075
+fx_scene.tscn::PackedScene::2505380075330507237::1714203075::0::1::::<><>::res://Entities/Entities Scripts/fx_scene.gd<>uid://b15h24rkxmcv1::::res://Sprites/dead_fx.png
+::res://Entities/Scenes/Player/::1714203075
+player.tscn::PackedScene::2918615905173748260::1714203075::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>uid://dmncs68l1eedp::::res://Sprites/Player_metroid.png<>uid://bau0xyy1434si::::res://Sprites/gun_1.png
 ::res://Interactables/::1713861087
-::res://Interactables/interactables_scripts/::1713863190
+::res://Interactables/interactables_scripts/::1714198636
 dead_area.gd::GDScript::-1::1713863190::0::1::::<>Area2D<>::
-::res://Interactables/scenes/::1713919916
-dead_area.tscn::PackedScene::6831415810517779332::1713919916::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
+exit.gd::GDScript::-1::1714198636::0::1::::<>Area2D<>::
+::res://Interactables/scenes/::1714203338
+dead_area.tscn::PackedScene::6831415810517779332::1714198636::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
+exit.tscn::PackedScene::4436147769587728158::1714198636::0::1::::<><>::res://Interactables/interactables_scripts/exit.gd<>uid://bpgcs2ilouwpp::::res://Sprites/exit_portal.png
+ammo_1.tscn::PackedScene::85950462541176311::1714203366::0::1::::<><>::res://Interactables/scenes/ammo_1.gd<>uid://dmy251bek1nx6::::res://Sprites/ammo.png
+ammo_1.gd::GDScript::-1::1714203335::0::1::::<>Area2D<>::
 ::res://Levels/::1713867772
-::res://Levels/level_generator_scripts/::1713871115
-main_room.gd::GDScript::-1::1713871115::0::1::::<>Node2D<>::
-walker.gd::GDScript::-1::1713871016::0::1::::Walker_room<>Node<>::
+::res://Levels/level_generator_scripts/::1714201642
+main_room.gd::GDScript::-1::1714201642::0::1::::<>Node2D<>::
+walker.gd::GDScript::-1::1714193929::0::1::::Walker_room<>Node<>::
 ::res://Scenes/::1713848410
 ::res://Sprites/::1713848505
 ammo.png::CompressedTexture2D::8052767540803018769::1713848505::1713848505::1::::<><>::

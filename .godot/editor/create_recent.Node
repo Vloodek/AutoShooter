@@ -1,13 +1,14 @@
 CollisionShape2D
 Area2D
+Timer
+ColorRect
 AnimationPlayer
 Sprite2D
+Node2D
 CharacterBody2D
 TileMap
 Label
 CanvasLayer
-ColorRect
 VisibleOnScreenNotifier2D
 Marker2D
-Node2D
 Camera2D
