@@ -1,8 +1,9 @@
+res://Entities/Entities Scripts
+res://Entities/Scenes/Enemies
+res://Interactables/scenes
+res://Interactables/interactables_scripts
 res://Levels/level_generator_scripts
 res://UI/ui_scripts
-res://Interactables/interactables_scripts
-res://Interactables/scenes
-res://Entities/Entities Scripts
 res://Entities/Scenes/Bullets
 res://Entities/Scenes/Player
 res://

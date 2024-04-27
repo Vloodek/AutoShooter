@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=3 uid="uid://bvb8qnr672hdy"]
+
+[ext_resource type="Script" path="res://Entities/Entities Scripts/enemy_1.gd" id="1_2kqfc"]
+[ext_resource type="Texture2D" uid="uid://bvaya7kx1kyd4" path="res://Sprites/enemy_rpg.png" id="1_7dr0y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqmee"]
+
+[sub_resource type="Animation" id="Animation_ts0gj"]
+resource_name = "move_right"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_4c2eb"]
+resource_name = "move_down"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_egdi0"]
+resource_name = "move_left"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14]
+}
+
+[sub_resource type="Animation" id="Animation_eon5q"]
+resource_name = "move_up"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_pudmg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ro4g1"]
+_data = {
+"RESET": SubResource("Animation_pudmg"),
+"move_down": SubResource("Animation_4c2eb"),
+"move_left": SubResource("Animation_egdi0"),
+"move_right": SubResource("Animation_ts0gj"),
+"move_up": SubResource("Animation_eon5q")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3aup4"]
+
+[node name="enemy_1" type="CharacterBody2D"]
+script = ExtResource("1_2kqfc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7dr0y")
+hframes = 5
+vframes = 4
+
+[node name="enemy_collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_aqmee")
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ro4g1")
+}
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="hitbox_collider" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("RectangleShape2D_3aup4")
+debug_color = Color(0.741037, 0.416132, 0.560041, 0.42)

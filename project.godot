@@ -15,6 +15,10 @@ run/main_scene="res://main_level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 ui_left={
@@ -54,6 +58,14 @@ ui_shoot={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(168, 13),"global_position":Vector2(172, 54),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Bullet"
+2d_physics/layer_3="Hazard"
+2d_physics/layer_4="Tilemap"
+2d_physics/layer_5="Exit"
 
 [rendering]
 
