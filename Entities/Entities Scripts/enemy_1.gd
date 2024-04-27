@@ -61,7 +61,7 @@ func random_direction():
 
 
 func _on_timer_timeout():
-	choose_direction()
+	makepath()
 	$Timer.start()
 
 
@@ -99,3 +99,17 @@ func animation():
 func _on_chase_box_area_entered(area):
 	if area.is_in_group("follow"):
 		new_direction = enemy_direction.CHASE
+
+
+
+@onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
+
+func _physics_process(_delta : float) -> void:
+	var chase_speed = 60
+	var dir = to_local(nav_agent.get_next_path_position()).normalized()
+	velocity = dir * chase_speed
+	move_and_slide()
+	
+	
+func makepath() -> void:
+	nav_agent.target_position = target.global_position

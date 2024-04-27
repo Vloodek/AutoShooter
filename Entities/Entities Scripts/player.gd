@@ -111,3 +111,4 @@ func instance_trail():
 func _on_trail_timer_timeout():
 	instance_trail()
 	$trail_timer.start()
+

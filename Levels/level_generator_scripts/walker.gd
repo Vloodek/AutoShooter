@@ -72,7 +72,6 @@ func place_room(position):
 				step_history.append(new_step)
 
 func get_end_room():
-	print('ya')
 	var end_room = rooms.pop_back()
 	var starting_position = step_history.front()
 	
