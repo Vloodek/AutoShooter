@@ -23,7 +23,7 @@ func walk(steps):
 	place_room(position)
 	
 	for step in steps:
-		if steps_since_turn >= 7.5:
+		if steps_since_turn >= 12:
 			change_direction()
 		if step():
 			step_history.append(position)
@@ -60,7 +60,7 @@ func create_room(position, size):
 	return {position = position, size = size}
 	
 func place_room(position):
-	var size = Vector2(randi() % 4 + 2 , randi() % 4 + 2)
+	var size = Vector2(randi() % 4 + 4 , randi() % 4 + 4)
 	var top_left_corner = (position - size / 2).floor()
 	
 	rooms.append(create_room(position,size))

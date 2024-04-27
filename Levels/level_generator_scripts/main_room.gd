@@ -5,7 +5,9 @@ extends Node2D
 @onready var enemy_scene = preload("res://Entities/Scenes/Enemies/enemy_1.tscn")
 
 @onready var tilemap = $TileMap
-@onready var tilemap_ground = $ground
+@onready var ground = $ground
+
+
 @export var borders = Rect2(1,1,100,52)
 var walker
 var map
@@ -19,25 +21,17 @@ func _ready():
 func generate_level():
 	walker = Walker_room.new(Vector2(3,5), borders)
 	map = walker.walk(800) # потестить
-	
 	var using_cells: Array = []
 	var all_cells: Array = tilemap.get_used_cells(ground_layer)
-	var all_cells_ground: Array = tilemap_ground.get_used_cells(ground_layer) # Получаем все используемые ячейки из тайлмапа с плитками пола
-
 	tilemap.clear()
 	walker.queue_free()
-	
 	for tile in all_cells:
 		if !map.has(Vector2(tile.x, tile.y)):
 			using_cells.append(tile)
-			
-	for tile in all_cells_ground:
-	# Проверка наличия плитки в map
-		if !map.has(Vector2(tile.x, tile.y)):
-			using_cells.append(tile)
-
+			ground.set_cell(0,Vector2i(tile.x, tile.y), 2,Vector2i(3,4)) # Заготовленная плитка ставится на тайлмап ground
 	tilemap.set_cells_terrain_connect(ground_layer,using_cells, ground_layer, ground_layer,false)
 	tilemap.set_cells_terrain_path(ground_layer,using_cells, ground_layer, ground_layer,false)
+	
 	
 	instance_exit()
 	instance_player()
