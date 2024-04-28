@@ -15,6 +15,7 @@ func _process(delta):
 
 #Удаление пули после колизии
 func _on_body_entered(body):
+	Globals.camera.screen_shake(2,9,0.05)
 	instance_fx()
 	queue_free()
 

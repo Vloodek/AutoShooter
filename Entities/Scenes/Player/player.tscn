@@ -1,11 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://bht2gbifhvqbk"]
+[gd_scene load_steps=14 format=3 uid="uid://bht2gbifhvqbk"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/player.gd" id="1_61qae"]
 [ext_resource type="Texture2D" uid="uid://dmncs68l1eedp" path="res://Sprites/Player_metroid.png" id="1_nepgj"]
+[ext_resource type="Shader" path="res://Shaders/hurt.gdshader" id="2_lwq4u"]
 [ext_resource type="Texture2D" uid="uid://bau0xyy1434si" path="res://Sprites/gun_1.png" id="3_uuing"]
+[ext_resource type="Script" path="res://Entities/Entities Scripts/camera.gd" id="4_3eo5q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3il0"]
 size = Vector2(14, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ly0rh"]
+shader = ExtResource("2_lwq4u")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifer = 0.0
 
 [sub_resource type="Animation" id="Animation_3sqp0"]
 resource_name = "Dead"
@@ -181,6 +188,7 @@ disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_ly0rh")
 position = Vector2(0, -13)
 texture = ExtResource("1_nepgj")
 hframes = 8
@@ -194,6 +202,7 @@ libraries = {
 
 [node name="hitbox" type="Area2D" parent="."]
 position = Vector2(0, -13)
+collision_mask = 32
 
 [node name="hitbox_collider" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(0, 13)
@@ -203,6 +212,10 @@ disabled = true
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -13)
 zoom = Vector2(3.4, 3.4)
+script = ExtResource("4_3eo5q")
+
+[node name="camera_shake" type="Timer" parent="Camera2D"]
+autostart = true
 
 [node name="gun_handler" type="Node2D" parent="."]
 position = Vector2(3, 0)
@@ -218,4 +231,6 @@ position = Vector2(11, 0)
 wait_time = 0.1
 autostart = true
 
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="Camera2D/camera_shake" to="Camera2D" method="_on_camera_shake_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]

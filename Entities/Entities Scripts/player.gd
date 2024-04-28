@@ -74,7 +74,7 @@ func dead():
 	await get_tree().create_timer(2).timeout #Ждем две секунды (столько длится анимация) и делаем что-то
 	if get_tree():
 		get_tree().reload_current_scene()
-		player_data.health +=4
+		player_data.health =4
 		player_data.ammo = 50
 		is_dead = false
 		
@@ -112,3 +112,14 @@ func _on_trail_timer_timeout():
 	instance_trail()
 	$trail_timer.start()
 
+
+#Если хитбокс игрока коллизия с врагом
+func _on_hitbox_area_entered(area):
+	if area.is_in_group("enemy"):
+		flash()
+		player_data.health -=0
+
+func flash():
+	$Sprite2D.material.set_shader_parameter("flash_modifer",1)
+	await get_tree().create_timer(0.3).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifer",0)
