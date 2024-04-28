@@ -177,7 +177,6 @@ _data = {
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
-scale = Vector2(0.694863, 0.694863)
 collision_mask = 31
 script = ExtResource("1_61qae")
 speed = 100
@@ -219,7 +218,7 @@ script = ExtResource("4_3eo5q")
 autostart = true
 
 [node name="gun_handler" type="Node2D" parent="."]
-position = Vector2(11.5131, -10.0739)
+position = Vector2(3, 0)
 
 [node name="gun_sprite" type="Sprite2D" parent="gun_handler"]
 position = Vector2(4, 0)
@@ -228,23 +227,12 @@ texture = ExtResource("3_uuing")
 [node name="bullet_point" type="Marker2D" parent="gun_handler"]
 position = Vector2(11, 0)
 
-[node name="gun_handler2" type="Node2D" parent="."]
-position = Vector2(11.5131, -10.0739)
-
-[node name="gun_sprite" type="Sprite2D" parent="gun_handler2"]
-position = Vector2(4, 0)
-texture = ExtResource("3_uuing")
-
-[node name="bullet_point" type="Marker2D" parent="gun_handler2"]
-position = Vector2(11, 0)
+[node name="fire_timer" type="Timer" parent="gun_handler"]
 
 [node name="trail_timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
 
-[node name="fire_timer" type="Timer" parent="."]
-
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="Camera2D/camera_shake" to="Camera2D" method="_on_camera_shake_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
-[connection signal="timeout" from="fire_timer" to="." method="_on_fire_timer_timeout"]

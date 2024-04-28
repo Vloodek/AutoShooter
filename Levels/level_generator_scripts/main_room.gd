@@ -53,7 +53,13 @@ func instance_exit():
 	exit.position = walker.get_end_room().position * 16
 
 func instance_enemy():
-	for i in range(50):
+	for i in range(12):
 		var enemy = enemy_scene.instantiate()
 		enemy.position = (map.pick_random() * borders.position) * 16
 		add_child(enemy)
+
+
+func _on_timer_timeout():
+	pass
+	#таймер в игре
+	#get_tree().reload_current_scene()

@@ -29,19 +29,15 @@ func _process(delta):
 			chase_state()
 func move_right():
 	velocity = Vector2.RIGHT * speed 
-	$anim.play("move_right")
 	move_and_slide()
 func move_left():
 	velocity = Vector2.LEFT * speed 
-	$anim.play("move_left")
 	move_and_slide()
 func move_up():
 	velocity = Vector2.UP * speed 
-	$anim.play("move_up")
 	move_and_slide()
 func move_down():
 	velocity = Vector2.DOWN * speed 
-	$anim.play("move_down")
 	move_and_slide()
 
 func choose_direction():
@@ -98,8 +94,9 @@ func animation():
 
 
 func _on_chase_box_area_entered(area):
-	if area.is_in_group("follow"):
-		new_direction = enemy_direction.CHASE
+	pass
+	#if area.is_in_group("follow"):
+		#new_direction = enemy_direction.CHASE
 
 
 
@@ -109,6 +106,7 @@ func _physics_process(_delta : float):
 	var chase_speed = 60
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
 	velocity = dir * chase_speed
+	animation()
 	move_and_slide()
 	
 	
