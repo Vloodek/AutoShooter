@@ -43,7 +43,7 @@ _data = {
 "RESET": SubResource("Animation_av2d4")
 }
 
-[node name="ammo_1" type="Area2D"]
+[node name="ammo_1" type="Area2D" groups=["ammo_pickup"]]
 y_sort_enabled = true
 script = ExtResource("1_jgmsa")
 

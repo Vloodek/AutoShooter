@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bht2gbifhvqbk"]
+[gd_scene load_steps=15 format=3 uid="uid://bht2gbifhvqbk"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/player.gd" id="1_61qae"]
 [ext_resource type="Texture2D" uid="uid://dmncs68l1eedp" path="res://Sprites/Player_metroid.png" id="1_nepgj"]
@@ -174,6 +174,31 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g51li"]
 
+[sub_resource type="GDScript" id="GDScript_dx13k"]
+script/source = "# GunHandler1.gd
+extends Node
+class_name Pistol
+
+@onready var fire_timer = $fire_timer1
+var bullet_scene = preload(\"res://Entities/Scenes/Bullets/bullet_1.tscn\")
+var bullet_point: Node # Предполагается, что здесь будет точка выстрела для оружия 1
+var fire_rate = 0.5
+func _ready():
+	fire_timer.wait_time = fire_rate
+
+func shoot():
+	if player_data.ammo > 0:
+		instance_bullet()
+		player_data.ammo -= 1
+
+func instance_bullet():
+	var bullet = bullet_scene.instance()
+	bullet.direction = bullet_point.global_position - bullet_point.global_position
+	bullet.global_position = bullet_point.global_position
+	get_tree().root.add_child(bullet)
+
+"
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -220,22 +245,15 @@ autostart = true
 
 [node name="gun_handler" type="Node2D" parent="."]
 position = Vector2(11.5131, -10.0739)
+script = SubResource("GDScript_dx13k")
 
 [node name="gun_sprite" type="Sprite2D" parent="gun_handler"]
 position = Vector2(4, 0)
 texture = ExtResource("3_uuing")
 
+[node name="fire_timer1" type="Timer" parent="gun_handler"]
+
 [node name="bullet_point" type="Marker2D" parent="gun_handler"]
-position = Vector2(11, 0)
-
-[node name="gun_handler2" type="Node2D" parent="."]
-position = Vector2(11.5131, -10.0739)
-
-[node name="gun_sprite" type="Sprite2D" parent="gun_handler2"]
-position = Vector2(4, 0)
-texture = ExtResource("3_uuing")
-
-[node name="bullet_point" type="Marker2D" parent="gun_handler2"]
 position = Vector2(11, 0)
 
 [node name="trail_timer" type="Timer" parent="."]
@@ -246,5 +264,7 @@ autostart = true
 
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="Camera2D/camera_shake" to="Camera2D" method="_on_camera_shake_timeout"]
+[connection signal="timeout" from="gun_handler/fire_timer1" to="." method="_on_fire_timer_timeout"]
+[connection signal="timeout" from="gun_handler/fire_timer1" to="." method="_on_fire_timer_1_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
 [connection signal="timeout" from="fire_timer" to="." method="_on_fire_timer_timeout"]

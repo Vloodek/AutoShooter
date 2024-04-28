@@ -20,7 +20,7 @@ var rot
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	fire_timer.wait_time = 1
+	fire_timer.wait_time = player_data.fire_rate
 	fire_timer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,31 +55,24 @@ func animations():
 		$anim.play("Idle")
 
 func dead():
+	reload_game()
+		
+func reload_game():
+	fire_timer.stop()
 	is_dead = true
 	velocity = Vector2.ZERO
 	gun.visible = false
 	$anim.play("Dead")
 	await get_tree().create_timer(2).timeout
 	if get_tree():
+		var ammo_pickups = get_tree().get_nodes_in_group("ammo_pickup")
+		for ammo_pickup in ammo_pickups:
+			ammo_pickup.queue_free()
 		get_tree().reload_current_scene()
 		player_data.health = 4
 		player_data.ammo = 50
 		is_dead = false
-
-#func target_mouse():
-	#if is_dead == false:
-		#var mouse_movement = get_global_mouse_position()
-		#pos = global_position
-		#gun.look_at(mouse_movement)
-		#rot = rad_to_deg((mouse_movement - pos).angle())
-		#if rot >= -90 and rot <= 90:
-			#gun_spr.flip_v = false
-			#$Sprite2D.flip_h = false
-		#else:
-			#gun_spr.flip_v = true
-			#$Sprite2D.flip_h = true
-	#else:
-		#return
+		$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
 
 func target_enemy():
 	var closest_enemy = null

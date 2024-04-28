@@ -15,3 +15,5 @@ res://UI/ui_scripts/GUI.gd
 res://Entities/Entities Scripts/camera.gd
 res://Entities/Entities Scripts/bullet_1.gd
 res://Entities/Entities Scripts/player_data.gd
+res://Entities/Scenes/Player/gun_handler1.gd
+res://Entities/Entities Scripts/Guns/Weapon.gd

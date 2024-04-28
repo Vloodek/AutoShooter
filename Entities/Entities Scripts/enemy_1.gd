@@ -75,8 +75,10 @@ func instance_fx():
 
 
 func instance_ammo():
+	
 	var ammo = ammo_scene.instantiate()
 	ammo.global_position = global_position
+	ammo.add_to_group("ammo_pickup")  # Устанавливаем группу для патрона
 	get_tree().root.add_child(ammo)
 
 func chase_state():
