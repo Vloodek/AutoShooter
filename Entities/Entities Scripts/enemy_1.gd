@@ -13,7 +13,6 @@ var change_direction
 func _ready():
 	choose_direction()
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	match new_direction:

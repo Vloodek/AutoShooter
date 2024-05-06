@@ -1,3 +1,5 @@
+res://UI/Scenes
+res://UI/ui_scripts
 res://Entities/Entities Scripts/Guns
 res://Entities/Entities Scripts
 res://
@@ -7,6 +9,5 @@ res://Interactables/scenes
 res://Entities/Scenes/Enemies
 res://Interactables/interactables_scripts
 res://Levels/level_generator_scripts
-res://UI/ui_scripts
 res://Entities/Scenes/Bullets
 res://Entities/Scenes/Player

@@ -8,7 +8,7 @@ var is_dead = false
 @onready var trail_scene = preload("res://Entities/Scenes/FX/scent_trail.tscn")
 @export var speed: int
 var input_movement = Vector2()
-
+@onready var ray_cast = $RayCast2D
 @onready var gun = $gun_handler
 @onready var gun_spr = $gun_handler/gun_sprite
 @onready var bullet_point = $gun_handler/bullet_point
@@ -18,12 +18,11 @@ var input_movement = Vector2()
 var pos
 var rot
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	fire_timer.wait_time = player_data.fire_rate
 	fire_timer.start()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if player_data.health <= 0:
 		current_state = player_states.DEAD
@@ -65,12 +64,13 @@ func reload_game():
 	$anim.play("Dead")
 	await get_tree().create_timer(2).timeout
 	if get_tree():
+		#Очистка опыта на карте
 		var ammo_pickups = get_tree().get_nodes_in_group("ammo_pickup")
 		for ammo_pickup in ammo_pickups:
 			ammo_pickup.queue_free()
 		get_tree().reload_current_scene()
-		player_data.health = 4
-		player_data.ammo = 50
+		player_data.health = player_data.default_health
+		player_data.ammo = player_data.default_ammo
 		is_dead = false
 		$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
 
@@ -84,20 +84,26 @@ func target_enemy():
 		if distance < min_distance:
 			min_distance = distance
 			closest_enemy = enemy
-
+	
+	
 	# If an enemy is found, rotate the gun towards it and start the timer
 	if closest_enemy:
-		if fire_timer.is_stopped():
-			fire_timer.start()
-		gun.look_at(closest_enemy.global_position)
-		pos = global_position
-		rot = rad_to_deg((closest_enemy.global_position - pos).angle())
-		if rot >= -90 and rot <= 90:
-			gun_spr.flip_v = false
-			$Sprite2D.flip_h = false
+		ray_cast.target_position = to_local(closest_enemy.global_position)
+		if ray_cast.get_collider() and ray_cast.get_collider().get_class() == "CharacterBody2D":
+			
+			if fire_timer.is_stopped():
+				fire_timer.start()
+			gun.look_at(closest_enemy.global_position)
+			pos = global_position
+			rot = rad_to_deg((closest_enemy.global_position - pos).angle())
+			if rot >= -90 and rot <= 90:
+				gun_spr.flip_v = false
+				$Sprite2D.flip_h = false
+			else:
+				gun_spr.flip_v = true
+				$Sprite2D.flip_h = true
 		else:
-			gun_spr.flip_v = true
-			$Sprite2D.flip_h = true
+			fire_timer.stop()
 	# If no enemies are nearby, pause the timer
 	else:
 		fire_timer.stop()
@@ -146,3 +152,12 @@ func _on_fire_timer_timeout():
 	if player_data.ammo > 0:
 		instance_bullet()
 		player_data.ammo -= 1
+
+func update_stats():
+	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
+	print('update')
+	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
+
+func _on_collect_area_area_entered(area):
+	print('da')
+	update_stats()
