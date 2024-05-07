@@ -643,9 +643,6 @@ position = Vector2(96, 61)
 [node name="GUI" type="CanvasLayer" parent="."]
 script = ExtResource("3_idno8")
 
-[node name="upgrade_screen" parent="GUI" instance=ExtResource("6_6v3cy")]
-texture_filter = 1
-
 [node name="heart" type="Sprite2D" parent="GUI"]
 position = Vector2(48, 32)
 scale = Vector2(2, 2)
@@ -706,5 +703,7 @@ layer_1/tile_data = PackedInt32Array(-1638435, 65536, 6, -1376291, 0, 5, -983075
 [node name="Timer" type="Timer" parent="."]
 wait_time = 20.0
 autostart = true
+
+[node name="upgrade_screen" parent="." instance=ExtResource("6_6v3cy")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

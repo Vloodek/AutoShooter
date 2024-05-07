@@ -1,2 +1,18 @@
+res://Interactables/scenes/ammo_1.tscn
 res://Entities/Entities Scripts/player.gd
 res://Shaders/hurt.gdshader
+res://Interactables/interactables_scripts/ammo_1.gd
+res://Entities/Entities Scripts/player_data.gd
+res://main_level.tscn
+res://UI/ui_scripts/GUI.gd
+res://Entities/Scenes/Enemies/enemy_1.tscn
+res://Entities/Scenes/Player/player.tscn
+res://Entities/Scenes/Bullets/bullet_1.tscn
+res://Entities/Scenes/FX/fx_scene.tscn
+res://Entities/Scenes/FX/scent_trail.tscn
+res://UI/Scenes/main_menu.tscn
+res://UI/Scenes/loading_screen.tscn
+res://Entities/Entities Scripts/enemy_1.gd
+res://UI/ui_scripts/upgrade_screen.gd
+res://UI/Scenes/upgrade_screen.tscn
+res://UI/Scenes/upgrade_screen.gdshader

@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var ammo = 10
+var ammo = 400
 @onready var player = get_tree().get_first_node_in_group("player")
 
 
@@ -19,6 +19,7 @@ func _on_body_entered(body):
 func _on_area_entered(area):
 	if area.name == "collect_area":
 		if player:
-			player_data.collector_range_scale += 0.5
+			player_data.collector_range_scale += 0.1
 			player.update_stats()
+			player_data.add_experience(ammo)
 		queue_free()

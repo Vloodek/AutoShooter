@@ -15,7 +15,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$ammo_amount.text = var_to_str(player_data.ammo)
+	$ammo_amount.text = var_to_str(player_data.experience)
 	$timer_countdown.text = var_to_str(timer.time_left).pad_decimals(0)
 	
 	for heart in $heart.get_children():

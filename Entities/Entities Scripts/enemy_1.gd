@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-@export var speed = 20
+@export var speed = 10
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
 @onready var ammo_scene = preload("res://Interactables/scenes/ammo_1.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
 enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
 var change_direction
-
+var HP = 3
 @onready var target = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
