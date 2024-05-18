@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed = 10
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
-@onready var ammo_scene = preload("res://Interactables/scenes/ammo_1.tscn")
+@onready var ammo_scene = preload("res://Interactables/scenes/exp.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
 enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
@@ -10,11 +10,14 @@ var change_direction
 var HP = 3
 @onready var target = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
+
+
 func _ready():
 	choose_direction()
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	match new_direction:
 		enemy_direction.RIGHT:
 			move_right()
@@ -26,18 +29,27 @@ func _process(delta):
 			move_down()
 		enemy_direction.CHASE:
 			chase_state()
+
+
 func move_right():
 	velocity = Vector2.RIGHT * speed 
 	move_and_slide()
+
+
 func move_left():
 	velocity = Vector2.LEFT * speed 
 	move_and_slide()
+
+
 func move_up():
 	velocity = Vector2.UP * speed 
 	move_and_slide()
+
+
 func move_down():
 	velocity = Vector2.DOWN * speed 
 	move_and_slide()
+
 
 func choose_direction():
 	change_direction = randi() % 4
@@ -63,9 +75,10 @@ func _on_timer_timeout():
 
 func _on_hitbox_area_entered(area):
 	if area.is_in_group("Bullet"):
-		instance_ammo()
+		instance_experience()
 		instance_fx()
 		queue_free()
+
 
 func instance_fx():
 	var fx = fx_scene.instantiate()
@@ -73,18 +86,19 @@ func instance_fx():
 	get_tree().root.add_child(fx)
 
 
-func instance_ammo():
-	
-	var ammo = ammo_scene.instantiate()
-	ammo.global_position = global_position
-	ammo.add_to_group("ammo_pickup")  # Устанавливаем группу для патрона
-	get_tree().root.add_child(ammo)
+func instance_experience():
+	var experience = ammo_scene.instantiate()
+	experience.global_position = global_position
+	experience.add_to_group("exp_pickup")  # Устанавливаем группу для патрона
+	get_tree().root.call_deferred("add_child", experience)
+
 
 func chase_state():
 	var chase_speed = 60
 	velocity = position.direction_to(target.global_position ) * chase_speed
 	animation()
 	move_and_slide()
+
 
 func animation():
 	if velocity > Vector2.ZERO:
@@ -93,14 +107,10 @@ func animation():
 		$anim.play("move_left")
 
 
-
-func _on_chase_box_area_entered(area):
+func _on_chase_box_area_entered(_area):
 	pass
 	#if area.is_in_group("follow"):
 		#new_direction = enemy_direction.CHASE
-
-
-
 
 
 func _physics_process(_delta : float):

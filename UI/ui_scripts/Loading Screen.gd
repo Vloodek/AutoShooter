@@ -7,10 +7,12 @@ var progress : Array[float]
 
 @onready var progress_bar : ProgressBar = $ProgressBar
 
+
 func _ready() -> void:
 	# Request to load the target scene:
 	ResourceLoader.load_threaded_request(target_scene_path)
-	
+
+
 func _process(_delta: float) -> void:
 	# Update the status:
 	loading_status = ResourceLoader.load_threaded_get_status(target_scene_path, progress)

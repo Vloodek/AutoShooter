@@ -13,13 +13,14 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if start_shaking == true:
 		offset.x = randi_range(-1,1) * shake_intensity
 		offset.y = randi_range(-1,1) * shake_intensity
 		shake_intensity = lerp(shake_intensity, 0.0, shake_dampening)
 	else:
 		offset = Vector2(0,0)
+	
 	
 func screen_shake(intensity, duration, dampening):
 	shake_intensity = intensity

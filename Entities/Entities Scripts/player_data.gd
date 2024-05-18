@@ -6,7 +6,7 @@ class_name player_data
 static var upgrade_screen: Node
 
 static var default_health = 4
-static var default_ammo = 20
+static var default_ammo = 1000000000
 static var default_fire_rate:float = 1.0
 static var default_speed = 100
 static var default_collector_range_scale:float = 1.0
@@ -20,20 +20,23 @@ static var collector_range_scale = default_collector_range_scale
 static var experience = 0
 static var level = 1
 
+
 static func add_experience(amount: int):
 	experience += amount
 	check_level_up()
 
+
 static func check_level_up():
-	var experience_needed = get_experience_needed(level)
+	var experience_needed = get_experience_needed()
 	while experience >= experience_needed:
 		level += 1
 		update_attributes_for_level()
-		experience_needed = get_experience_needed(level)
+		experience_needed = get_experience_needed()
 		if level > 1:
 			show_upgrade_screen()
 
-static func get_experience_needed(level: int) -> int:
+
+static func get_experience_needed() -> int:
 	print(level)
 	if level == 1:
 		return 500
@@ -48,12 +51,15 @@ static func get_experience_needed(level: int) -> int:
 	else:
 		return 0
 
+
 static func update_attributes_for_level():
 	pass
+
 
 # Функция для установки ссылки на экран прокачки
 static func set_upgrade_screen(screen: Node):
 	upgrade_screen = screen
+
 
 static func show_upgrade_screen():
 	# Проверяем, что у нас есть ссылка на экран прокачки

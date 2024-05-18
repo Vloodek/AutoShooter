@@ -4,6 +4,8 @@ extends Area2D
 @export var speed = 50
 var direction = Vector2.RIGHT
 # Called when the node enters the scene tree for the first time.
+
+
 func _ready():
 	pass # Replace with function body.
 
@@ -13,13 +15,12 @@ func _process(delta):
 	translate(direction * speed * delta )
 	pass
 
+
 #Удаление пули после колизии
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	Globals.camera.screen_shake(2,9,0.05)
 	instance_fx()
 	queue_free()
-
-
 
 
 func instance_fx():
