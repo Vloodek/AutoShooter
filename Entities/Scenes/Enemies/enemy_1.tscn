@@ -143,7 +143,16 @@ shape = SubResource("RectangleShape2D_dphnk")
 debug_color = Color(0.185523, 0.0931787, 0.00388406, 0.42)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 path_postprocessing = 1
+avoidance_enabled = true
+radius = 30.0
+neighbor_distance = 30.0
+max_neighbors = 300
+avoidance_layers = 32
+avoidance_mask = 8
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.45

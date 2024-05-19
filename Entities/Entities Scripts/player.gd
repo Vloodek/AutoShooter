@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var current_state = player_states.MOVE
 enum player_states {MOVE, DEAD}
-var is_dead = false
+var _is_dead = false
 
 @onready var bullet_scene = preload("res://Entities/Scenes/Bullets/bullet_1.tscn")
 @onready var trail_scene = preload("res://Entities/Scenes/FX/scent_trail.tscn")
@@ -62,7 +62,7 @@ func movement(_delta):
 
 
 func die():
-	is_dead = true
+	_is_dead = true
 	#fire_timer.stop()
 	velocity = Vector2.ZERO
 	gun.visible = false
@@ -75,7 +75,7 @@ func die():
 
 #func reload_game():
 	#fire_timer.stop()
-	#is_dead = true
+	#_is_dead = true
 	#velocity = Vector2.ZERO
 	#gun.visible = false
 	#$anim.play("Dead")
@@ -87,7 +87,7 @@ func die():
 			#exp_pickup.queue_free()
 		#player_data.health = player_data.default_health
 		#player_data.ammo = player_data.default_ammo
-		#is_dead = false
+		#_is_dead = false
 		#$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
 		#get_tree().reload_current_scene()
 
@@ -132,7 +132,7 @@ func target_enemy(delta):
 
 
 #func target_mouse_or_enemy(delta):
-	#if is_dead:
+	#if _is_dead:
 		#return
 	#var is_enemy_on_the_scene = get_tree().get_nodes_in_group("enemy").size()
 	#if is_enemy_on_the_scene > 0:
@@ -142,7 +142,7 @@ func target_enemy(delta):
 
 
 func change_dead_state(value):
-	is_dead = value
+	_is_dead = value
 
 
 func instance_bullet():

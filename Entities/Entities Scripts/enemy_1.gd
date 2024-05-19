@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed = 10
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
-@onready var ammo_scene = preload("res://Interactables/scenes/exp.tscn")
+@onready var exp_scene = preload("res://Interactables/scenes/exp.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
 enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
@@ -13,59 +13,62 @@ var HP = 3
 
 
 func _ready():
-	choose_direction()
+	#choose_direction()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	match new_direction:
-		enemy_direction.RIGHT:
-			move_right()
-		enemy_direction.LEFT:
-			move_left()
-		enemy_direction.UP:
-			move_up()
-		enemy_direction.DOWN:
-			move_down()
-		enemy_direction.CHASE:
-			chase_state()
+#func _process(_delta):
+	#match new_direction:
+		#enemy_direction.RIGHT:
+			#move_right()
+		#enemy_direction.LEFT:
+			#move_left()
+		#enemy_direction.UP:
+			#move_up()
+		#enemy_direction.DOWN:
+			#move_down()
+		#enemy_direction.CHASE:
+			#chase_state()
 
 
-func move_right():
-	velocity = Vector2.RIGHT * speed 
-	move_and_slide()
+#func move_right():
+	#velocity = Vector2.RIGHT * speed 
+	#move_and_slide()
+#
+#
+#func move_left():
+	#velocity = Vector2.LEFT * speed 
+	#move_and_slide()
+#
+#
+#func move_up():
+	#velocity = Vector2.UP * speed 
+	#move_and_slide()
+#
+#
+#func move_down():
+	#velocity = Vector2.DOWN * speed 
+	#move_and_slide()
 
 
-func move_left():
-	velocity = Vector2.LEFT * speed 
-	move_and_slide()
-
-
-func move_up():
-	velocity = Vector2.UP * speed 
-	move_and_slide()
-
-
-func move_down():
-	velocity = Vector2.DOWN * speed 
-	move_and_slide()
-
-
-func choose_direction():
-	change_direction = randi() % 4
-	random_direction()
+#func choose_direction():
+	#change_direction = randi() % 4
+	#random_direction()
 	
 	
-func random_direction():
-	match  change_direction:
-		0:
-			new_direction = enemy_direction.RIGHT
-		1:
-			new_direction = enemy_direction.LEFT
-		2:
-			new_direction = enemy_direction.UP
-		3:
-			new_direction = enemy_direction.DOWN
+#func random_direction():
+	#match  change_direction:
+		#0:
+			#new_direction = enemy_direction.RIGHT
+		#1:
+			#new_direction = enemy_direction.LEFT
+		#2:
+			#new_direction = enemy_direction.UP
+		#3:
+			#new_direction = enemy_direction.DOWN
+	#new_direction = enemy_direction.values()[change_direction]
+
 
 
 func _on_timer_timeout():
@@ -87,17 +90,17 @@ func instance_fx():
 
 
 func instance_experience():
-	var experience = ammo_scene.instantiate()
+	var experience = exp_scene.instantiate()
 	experience.global_position = global_position
 	experience.add_to_group("exp_pickup")  # Устанавливаем группу для патрона
 	get_tree().root.call_deferred("add_child", experience)
 
 
-func chase_state():
-	var chase_speed = 60
-	velocity = position.direction_to(target.global_position ) * chase_speed
-	animation()
-	move_and_slide()
+#func chase_state():
+	#var chase_speed = 60
+	#velocity = position.direction_to(target.global_position ) * chase_speed
+	#animation()
+	#move_and_slide()
 
 
 func animation():
