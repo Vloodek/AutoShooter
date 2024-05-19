@@ -2,29 +2,17 @@ res://main_level.tscn
 res://Entities/Entities Scripts/player.gd
 res://Shaders/hurt.gdshader
 res://UI/Scenes/upgrade_screen.gdshader
-res://Entities/Scenes/Enemies/enemy_1.tscn
 res://Entities/Scenes/Player/player.tscn
+res://Entities/Scenes/Enemies/enemy_1.tscn
 res://Entities/Scenes/Bullets/bullet_1.tscn
 res://Entities/Scenes/FX/fx_scene.tscn
-res://Interactables/scenes/ammo_1.tscn
 res://Entities/Scenes/FX/scent_trail.tscn
 res://UI/Scenes/main_menu.tscn
 res://UI/Scenes/loading_screen.tscn
 res://UI/Scenes/upgrade_screen.tscn
-res://Levels/level_generator_scripts/main_room.gd
-res://Entities/Entities Scripts/bullet_1.gd
-res://Entities/Entities Scripts/enemy_1.gd
-res://Interactables/interactables_scripts/ammo_1.gd
-res://Entities/Entities Scripts/player_data.gd
 res://Interactables/scenes/exp.tscn
-res://Entities/Entities Scripts/fx_scene.gd
-res://UI/ui_scripts/Loading Screen.gd
-res://UI/ui_scripts/main_menu.gd
-res://Entities/Entities Scripts/scent_trail.gd
-res://UI/ui_scripts/upgrade_screen.gd
-res://Interactables/interactables_scripts/exit.gd
-res://Entities/Entities Scripts/camera.gd
-res://Interactables/interactables_scripts/dead_area.gd
-res://UI/ui_scripts/GUI.gd
-res://Levels/level_generator_scripts/walker.gd
 res://Interactables/scenes/exit.tscn
+res://Levels/level_generator_scripts/main_room.gd
+res://Levels/level_generator_scripts/walker.gd
+res://UI/ui_scripts/GUI.gd
+res://Entities/Entities Scripts/player_data.gd

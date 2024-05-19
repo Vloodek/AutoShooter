@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bht2gbifhvqbk"]
+[gd_scene load_steps=18 format=3 uid="uid://bht2gbifhvqbk"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/player.gd" id="1_61qae"]
 [ext_resource type="Texture2D" uid="uid://dmncs68l1eedp" path="res://Sprites/Player_metroid.png" id="1_nepgj"]
@@ -204,6 +204,9 @@ func instance_bullet():
 
 "
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_flv02"]
+radius = 100.0
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
 y_sort_enabled = true
@@ -269,6 +272,8 @@ position = Vector2(4, 0)
 texture = ExtResource("3_uuing")
 
 [node name="fire_timer1" type="Timer" parent="gun_handler"]
+wait_time = 4096.0
+one_shot = true
 
 [node name="bullet_point" type="Marker2D" parent="gun_handler"]
 position = Vector2(11, 0)
@@ -278,10 +283,18 @@ wait_time = 0.1
 autostart = true
 
 [node name="fire_timer" type="Timer" parent="."]
+wait_time = 4096.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 40
 hit_from_inside = true
+
+[node name="shoot_range_area" type="Area2D" parent="."]
+collision_mask = 32
+
+[node name="shoot_range_collider" type="CollisionShape2D" parent="shoot_range_area"]
+shape = SubResource("CircleShape2D_flv02")
+debug_color = Color(0.936665, 1.84822e-05, 0.631247, 0.42)
 
 [connection signal="area_entered" from="collect_area" to="." method="_on_collect_area_area_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
@@ -289,3 +302,5 @@ hit_from_inside = true
 [connection signal="timeout" from="gun_handler/fire_timer1" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
 [connection signal="timeout" from="fire_timer" to="." method="_on_fire_timer_timeout"]
+[connection signal="body_entered" from="shoot_range_area" to="." method="_on_shoot_range_area_body_entered"]
+[connection signal="body_exited" from="shoot_range_area" to="." method="_on_shoot_range_area_body_exited"]

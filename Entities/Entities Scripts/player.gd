@@ -12,52 +12,58 @@ var input_movement = Vector2()
 @onready var gun = $gun_handler
 @onready var gun_spr = $gun_handler/gun_sprite
 @onready var bullet_point = $gun_handler/bullet_point
-@onready var fire_timer = $fire_timer
+@onready var shoot_range_collider = $shoot_range_area/shoot_range_collider
+#@onready var fire_timer = $fire_timer
 
 var pos
 var rot
+var min_distance_to_shoot
+var time_since_last_call: float = 0.0
+var fire_rate: float = player_data.fire_rate
+var enemy_list_at_range: Array
 
 
 func _ready():
-	fire_timer.wait_time = player_data.fire_rate
-	fire_timer.start()
+	pass
+	#fire_timer.wait_time = player_data.fire_rate
+	#fire_timer.start()
 
 
 func _process(delta):
 	if player_data.health <= 0:
 		current_state = player_states.DEAD
-	target_mouse_or_enemy()
-	match current_state:
-		player_states.MOVE:
-			movement(delta)
-		player_states.DEAD:
-			dead()
+		die()
+	else:
+		target_enemy(delta)
+		#if current_state == player_states.MOVE:
+		movement(delta)
 
 
 func movement(_delta):
-	animations()
-	input_movement = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
+	#animations()
+	input_movement = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if input_movement != Vector2.ZERO:
+		$anim.play("Move")
 		velocity = input_movement * speed
 	else:
+		$anim.play("Idle")
 		velocity = Vector2.ZERO
-
 	#if Input.is_action_just_pressed("ui_shoot") && player_data.ammo > 0:
 		#player_data.ammo -= 1
 		#instance_bullet()
 	move_and_slide()
 
 
-func animations():
-	if input_movement != Vector2.ZERO:
-		$anim.play("Move")
-	else:
-		$anim.play("Idle")
+#func animations():
+	#if input_movement != Vector2.ZERO:
+		#$anim.play("Move")
+	#else:
+		#$anim.play("Idle")
 
 
-func dead():
+func die():
 	is_dead = true
-	fire_timer.stop()
+	#fire_timer.stop()
 	velocity = Vector2.ZERO
 	gun.visible = false
 	$anim.play("Dead")
@@ -86,24 +92,22 @@ func dead():
 		#get_tree().reload_current_scene()
 
 
-func target_enemy():
+func target_enemy(delta):
 	var closest_enemy = null
-	var min_distance = 150
-
+	min_distance_to_shoot = player_data.min_distance_to_shoot
 	# Iterate through all enemies to find the closest one
-	for enemy in get_tree().get_nodes_in_group("enemy"):
+	for enemy in enemy_list_at_range:
 		var distance = global_position.distance_to(enemy.global_position)
-		if distance < min_distance:
-			min_distance = distance
+		if distance < min_distance_to_shoot:
+			min_distance_to_shoot = distance
 			closest_enemy = enemy
 	
 	# If an enemy is found, rotate the gun towards it and start the timer
 	if closest_enemy:
 		ray_cast.target_position = to_local(closest_enemy.global_position)
 		if ray_cast.get_collider() and ray_cast.get_collider().get_class() == "CharacterBody2D":
-			
-			if fire_timer.is_stopped():
-				fire_timer.start()
+			#if fire_timer.is_stopped():
+				#fire_timer.start()
 			gun.look_at(closest_enemy.global_position)
 			pos = global_position
 			rot = rad_to_deg((closest_enemy.global_position - pos).angle())
@@ -113,21 +117,28 @@ func target_enemy():
 			else:
 				gun_spr.flip_v = true
 				$Sprite2D.flip_h = true
-		else:
-			fire_timer.stop()
+			 # Обновляем счетчик времени
+			time_since_last_call += delta
+			# Проверяем, прошло ли малое время с последнего вызова
+			if time_since_last_call >= fire_rate:
+				instance_bullet()
+				# Сбрасываем счетчик времени после вызова функции
+				time_since_last_call = 0.0
+		#else:
+			#fire_timer.stop()
 	# If no enemies are nearby, pause the timer
-	else:
-		fire_timer.stop()
+	#else:
+		#fire_timer.stop()
 
 
-func target_mouse_or_enemy():
-	if is_dead:
-		return
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	if enemies.size() > 0:
-		target_enemy()
-	else:
-		fire_timer.stop()
+#func target_mouse_or_enemy(delta):
+	#if is_dead:
+		#return
+	#var is_enemy_on_the_scene = get_tree().get_nodes_in_group("enemy").size()
+	#if is_enemy_on_the_scene > 0:
+	#target_enemy(delta)
+	#else:
+		#fire_timer.stop()
 
 
 func change_dead_state(value):
@@ -168,9 +179,10 @@ func flash():
 	$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
 
 
-func _on_fire_timer_timeout():
+#func _on_fire_timer_timeout():
+	#pass
 	#if player_data.ammo > 0:
-	instance_bullet()
+	#instance_bullet()
 	#player_data.ammo -= 1
 
 
@@ -178,8 +190,21 @@ func update_stats():
 	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
 	#print('update')
 	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
+	shoot_range_collider.shape.radius = player_data.min_distance_to_shoot
 
 
 func _on_collect_area_area_entered(_area):
 	#print('da')
 	update_stats()
+
+
+func _on_shoot_range_area_body_entered(body):
+	enemy_list_at_range.append(body)
+	for enemy in enemy_list_at_range:
+		if enemy == null:
+			enemy_list_at_range.erase(enemy)
+	#print(enemy_list_at_range)
+
+
+func _on_shoot_range_area_body_exited(body):
+	enemy_list_at_range.erase(body)

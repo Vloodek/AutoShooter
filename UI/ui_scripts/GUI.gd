@@ -22,6 +22,7 @@ func _process(_delta):
 	for heart in $heart.get_children():
 		var index = heart.get_index()
 		var x = (index % HEART_ROW_SIZE) * HEART_OFFSET
+		@warning_ignore("integer_division")
 		var y = (index / HEART_ROW_SIZE) * HEART_OFFSET
 		heart.position = Vector2(x,y)
 		#Отображение сердечек в зависимости от кол-ва хп

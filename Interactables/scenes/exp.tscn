@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bhvud3xvwngx"]
 
-[ext_resource type="Script" path="res://Interactables/interactables_scripts/ammo_1.gd" id="1_11uxr"]
+[ext_resource type="Script" path="res://Interactables/interactables_scripts/experience_1.gd" id="1_nl83h"]
 [ext_resource type="Texture2D" uid="uid://dmy251bek1nx6" path="res://Sprites/ammo.png" id="2_0jcdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqngp"]
@@ -45,7 +45,7 @@ _data = {
 
 [node name="exp" type="Area2D" groups=["exp_pickup"]]
 y_sort_enabled = true
-script = ExtResource("1_11uxr")
+script = ExtResource("1_nl83h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true

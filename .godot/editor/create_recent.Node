@@ -1,3 +1,5 @@
+CollisionShape2D
+Area2D
 Timer
 Button
 ColorRect
@@ -7,9 +9,6 @@ HBoxContainer
 PanelContainer
 ItemList
 Control
-CollisionShape2D
-Area2D
 ProgressBar
 VBoxContainer
 Label
-MarginContainer

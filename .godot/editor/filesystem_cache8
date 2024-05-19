@@ -1,42 +1,43 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1716023129
+::res://::1716101373
 Globals.gd::GDScript::-1::1715921486::0::1::::<>Node<>::
 icon.svg::CompressedTexture2D::1311239764282031588::1715921486::1715921486::1::::<><>::
-main_level.tscn::PackedScene::6056800896633225337::1716023129::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>uid://c4lgoj5et8aj1::::res://Interactables/scenes/dead_area.tscn<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://cv1smvwj2lp2x::::res://Sprites/complex_tilemap_16px.png<>uid://4caganixe3qx::::res://UI/Scenes/upgrade_screen.tscn
+main_level.tscn::PackedScene::6056800896633225337::1716101373::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>uid://c4lgoj5et8aj1::::res://Interactables/scenes/dead_area.tscn<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://cv1smvwj2lp2x::::res://Sprites/complex_tilemap_16px.png<>uid://4caganixe3qx::::res://UI/Scenes/upgrade_screen.tscn
 ::res://Entities/::1715921486
-::res://Entities/Entities Scripts/::1716023129
-bullet_1.gd::GDScript::-1::1716006434::0::1::::<>Area2D<>::
-camera.gd::GDScript::-1::1715921486::0::1::::<>Camera2D<>::
-enemy_1.gd::GDScript::-1::1716022282::0::1::::<>CharacterBody2D<>::
-fx_scene.gd::GDScript::-1::1715921486::0::1::::<>Node2D<>::
-player.gd::GDScript::-1::1716022672::0::1::::<>CharacterBody2D<>::
-player_data.gd::GDScript::-1::1716023129::0::1::::player_data<>Node<>::
-scent_trail.gd::GDScript::-1::1715921486::0::1::::<>Area2D<>::
+::res://Entities/Entities Scripts/::1716101369
+bullet_1.gd::GDScript::-1::1716026597::0::1::::<>Area2D<>::
+camera.gd::GDScript::-1::1716030397::0::1::::<>Camera2D<>::
+enemy_1.gd::GDScript::-1::1716033445::0::1::::<>CharacterBody2D<>::
+fx_scene.gd::GDScript::-1::1716027733::0::1::::<>Node2D<>::
+player.gd::GDScript::-1::1716101369::0::1::::<>CharacterBody2D<>::
+player_data.gd::GDScript::-1::1716094276::0::1::::player_data<>Node<>::
+scent_trail.gd::GDScript::-1::1716027733::0::1::::<>Area2D<>::
 ::res://Entities/Scenes/::1715921486
-::res://Entities/Scenes/Bullets/::1716023130
-bullet_1.tscn::PackedScene::5027328062542402874::1716023130::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
-::res://Entities/Scenes/Enemies/::1716023129
-enemy_1.tscn::PackedScene::3864483721827169810::1716023129::0::1::::<><>::res://Entities/Entities Scripts/enemy_1.gd<>uid://bvaya7kx1kyd4::::res://Sprites/enemy_rpg.png
-::res://Entities/Scenes/FX/::1716023130
-fx_scene.tscn::PackedScene::2505380075330507237::1716023130::0::1::::<><>::res://Entities/Entities Scripts/fx_scene.gd<>uid://b15h24rkxmcv1::::res://Sprites/dead_fx.png
-scent_trail.tscn::PackedScene::8092665436404020458::1716023130::0::1::::<><>::res://Entities/Entities Scripts/scent_trail.gd
-::res://Entities/Scenes/Player/::1716023130
-player.tscn::PackedScene::2918615905173748260::1716023130::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>uid://dmncs68l1eedp::::res://Sprites/Player_metroid.png<>res://Shaders/hurt.gdshader<>uid://bau0xyy1434si::::res://Sprites/gun_1.png<>res://Entities/Entities Scripts/camera.gd
+::res://Entities/Scenes/Bullets/::1716101373
+bullet_1.tscn::PackedScene::5027328062542402874::1716101373::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
+::res://Entities/Scenes/Enemies/::1716101373
+enemy_1.tscn::PackedScene::3864483721827169810::1716101373::0::1::::<><>::res://Entities/Entities Scripts/enemy_1.gd<>uid://bvaya7kx1kyd4::::res://Sprites/enemy_rpg.png
+::res://Entities/Scenes/FX/::1716101373
+fx_scene.tscn::PackedScene::2505380075330507237::1716101373::0::1::::<><>::res://Entities/Entities Scripts/fx_scene.gd<>uid://b15h24rkxmcv1::::res://Sprites/dead_fx.png
+scent_trail.tscn::PackedScene::8092665436404020458::1716101373::0::1::::<><>::res://Entities/Entities Scripts/scent_trail.gd
+::res://Entities/Scenes/Player/::1716101373
+player.tscn::PackedScene::2918615905173748260::1716101657::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>uid://dmncs68l1eedp::::res://Sprites/Player_metroid.png<>res://Shaders/hurt.gdshader<>uid://bau0xyy1434si::::res://Sprites/gun_1.png<>res://Entities/Entities Scripts/camera.gd<>res://Entities/Scenes/Player/shoot_range_area.gd
+shoot_range_area.gd::GDScript::-1::1716101599::0::1::::<>Area2D<>::
 ::res://Interactables/::1715921486
-::res://Interactables/interactables_scripts/::1716022879
-ammo_1.gd::GDScript::-1::1716022879::0::1::::<>Area2D<>::
-dead_area.gd::GDScript::-1::1715921486::0::1::::<>Area2D<>::
-exit.gd::GDScript::-1::1715921486::0::1::::<>Area2D<>::
-::res://Interactables/scenes/::1716023130
-ammo_1.tscn::PackedScene::85950462541176311::1716023130::0::1::::<><>::res://Interactables/interactables_scripts/ammo_1.gd<>uid://dmy251bek1nx6::::res://Sprites/ammo.png
+::res://Interactables/interactables_scripts/::1716101369
+dead_area.gd::GDScript::-1::1716026777::0::1::::<>Area2D<>::
+exit.gd::GDScript::-1::1716032250::0::1::::<>Area2D<>::
+experience_1.gd::GDScript::-1::1716027185::0::1::::<>Area2D<>::
+::res://Interactables/scenes/::1716101374
 dead_area.tscn::PackedScene::6831415810517779332::1715921486::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
-exit.tscn::PackedScene::4436147769587728158::1715921486::0::1::::<><>::res://Interactables/interactables_scripts/exit.gd<>uid://bpgcs2ilouwpp::::res://Sprites/exit_portal.png
+exit.tscn::PackedScene::4436147769587728158::1716101374::0::1::::<><>::res://Interactables/interactables_scripts/exit.gd<>uid://bpgcs2ilouwpp::::res://Sprites/exit_portal.png
+exp.tscn::PackedScene::85950462541176311::1716101374::0::1::::<><>::res://Interactables/interactables_scripts/experience_1.gd<>uid://dmy251bek1nx6::::res://Sprites/ammo.png
 ::res://Levels/::1715921486
-::res://Levels/level_generator_scripts/::1716022282
-main_room.gd::GDScript::-1::1716022282::0::1::::MainLevel<>Node2D<>::
-walker.gd::GDScript::-1::1715946093::0::1::::Walker_room<>Node<>::
-::res://Shaders/::1716023130
-hurt.gdshader::Shader::-1::1716023130::0::1::::<><>::
+::res://Levels/level_generator_scripts/::1716100505
+main_room.gd::GDScript::-1::1716100505::0::1::::MainLevel<>Node2D<>::
+walker.gd::GDScript::-1::1716091206::0::1::::Walker_room<>Node<>::
+::res://Shaders/::1716101374
+hurt.gdshader::Shader::-1::1716101657::0::1::::<><>::
 ::res://Sprites/::1715921486
 ammo.png::CompressedTexture2D::8052767540803018769::1715921486::1715921486::1::::<><>::
 bullet.png::CompressedTexture2D::8851945249763435882::1715921486::1715921486::1::::<><>::
@@ -54,13 +55,13 @@ target_cursor.png::CompressedTexture2D::1753798007703121319::1715921486::1715921
 ::res://Sprites/UI/::1715921486
 menu_back.jpg::CompressedTexture2D::2217354794598279946::1715921486::1715921486::1::::<><>::
 ::res://UI/::1715921486
-::res://UI/Scenes/::1716023130
-loading_screen.tscn::PackedScene::8117345642244204040::1716023130::0::1::::<><>::res://UI/ui_scripts/Loading Screen.gd
-main_menu.tscn::PackedScene::5674350469317409851::1716023130::0::1::::<><>::res://UI/ui_scripts/main_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
-upgrade_screen.gdshader::Shader::-1::1716023130::0::1::::<><>::
-upgrade_screen.tscn::PackedScene::2039615956251354743::1716023130::0::1::::<><>::res://UI/ui_scripts/upgrade_screen.gd<>res://UI/Scenes/upgrade_screen.gdshader
-::res://UI/ui_scripts/::1715924595
-GUI.gd::GDScript::-1::1715921486::0::1::::<>CanvasLayer<>::
-Loading Screen.gd::GDScript::-1::1715924595::0::1::::<>Control<>::
-main_menu.gd::GDScript::-1::1715921486::0::1::::MainMenu<>Control<>::
-upgrade_screen.gd::GDScript::-1::1715921486::0::1::::<>Control<>::
+::res://UI/Scenes/::1716101374
+loading_screen.tscn::PackedScene::8117345642244204040::1716101374::0::1::::<><>::res://UI/ui_scripts/Loading Screen.gd
+main_menu.tscn::PackedScene::5674350469317409851::1716101373::0::1::::<><>::res://UI/ui_scripts/main_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
+upgrade_screen.gdshader::Shader::-1::1716101657::0::1::::<><>::
+upgrade_screen.tscn::PackedScene::2039615956251354743::1716101374::0::1::::<><>::res://UI/ui_scripts/upgrade_screen.gd<>res://UI/Scenes/upgrade_screen.gdshader
+::res://UI/ui_scripts/::1716091792
+GUI.gd::GDScript::-1::1716091792::0::1::::<>CanvasLayer<>::
+Loading Screen.gd::GDScript::-1::1716026300::0::1::::<>Control<>::
+main_menu.gd::GDScript::-1::1716026300::0::1::::MainMenu<>Control<>::
+upgrade_screen.gd::GDScript::-1::1716026300::0::1::::<>Control<>::

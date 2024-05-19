@@ -51,7 +51,7 @@ func instance_empty_rooms():
 			using_cells.append(tile)
 			ground.set_cell(0,Vector2i(tile.x, tile.y), 2,Vector2i(3,4)) # Заготовленная плитка ставится на тайлмап ground
 	tilemap.set_cells_terrain_connect(ground_layer, using_cells, ground_layer, ground_layer, false)
-	tilemap.set_cells_terrain_path(ground_layer, using_cells, ground_layer, ground_layer, false)
+	#tilemap.set_cells_terrain_path(ground_layer, using_cells, ground_layer, ground_layer, false)
 	return [walker, map]
 
 
@@ -107,8 +107,9 @@ func instance_enemy(player_pos, number_enemy, is_boss_flag: bool = false):
 
 # enter pressed
 func _input(_event):
-	if Input.is_action_just_pressed("ui_accept"):
-		get_tree().reload_current_scene()
+	if player.is_dead && Input.is_action_just_pressed("ui_accept") && !is_scene_reloading:
+			is_scene_reloading = true
+			reload_game()
 
 
 #func set_value_timer_ended_counter(value):
@@ -135,14 +136,12 @@ func _on_timer_timeout():
 
 
 func _on_timer_check_reload_timeout():
-	if player.is_dead && !is_scene_reloading || exit.is_entered:
+	if exit.is_entered && !is_scene_reloading:
 		is_scene_reloading = true
-		reload_game(player.is_dead)
+		reload_game()
 
 
-func reload_game(is_player_dead):
-	if is_player_dead:
-		await get_tree().create_timer(2).timeout
+func reload_game():
 	if get_tree():
 		#Очистка опыта на карте
 		var exp_pickups = get_tree().get_nodes_in_group("exp_pickup")
