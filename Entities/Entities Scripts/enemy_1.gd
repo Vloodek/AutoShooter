@@ -8,8 +8,10 @@ enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
 var change_direction
 var HP = 3
+const CHASE_SPEED = 60
 @onready var target = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
+var time_since_last_call: float = 0.0
 
 
 func _ready():
@@ -70,7 +72,6 @@ func _ready():
 	#new_direction = enemy_direction.values()[change_direction]
 
 
-
 func _on_timer_timeout():
 	makepath()
 	$Timer.start()
@@ -117,11 +118,14 @@ func _on_chase_box_area_entered(_area):
 
 
 func _physics_process(_delta : float):
-	var chase_speed = 60
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
-	velocity = dir * chase_speed
+	velocity = dir * CHASE_SPEED
 	animation()
 	move_and_slide()
+	#time_since_last_call += delta
+	#if time_since_last_call > 0.45:
+		#makepath()
+		#time_since_last_call = 0.0
 	
 	
 func makepath():

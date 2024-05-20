@@ -126,7 +126,7 @@ libraries = {
 "": SubResource("AnimationLibrary_ro4g1")
 }
 
-[node name="hitbox" type="Area2D" parent="." groups=["enemy"]]
+[node name="hitbox" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 3
 
@@ -147,12 +147,11 @@ process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
 path_postprocessing = 1
-avoidance_enabled = true
 radius = 30.0
-neighbor_distance = 30.0
+neighbor_distance = 200.0
 max_neighbors = 300
-avoidance_layers = 32
-avoidance_mask = 8
+avoidance_layers = 0
+avoidance_mask = 0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.45

@@ -9,17 +9,21 @@ var _is_dead = false
 @export var speed: int
 var input_movement = Vector2()
 @onready var ray_cast = $RayCast2D
-@onready var gun = $gun_handler
-@onready var gun_spr = $gun_handler/gun_sprite
-@onready var bullet_point = $gun_handler/bullet_point
 @onready var shoot_range_collider = $shoot_range_area/shoot_range_collider
+@onready var guns: Array = [$gun_handler1, $gun_handler2, $gun_handler3, $gun_handler4]
+@onready var gun_sprs: Array = [$gun_handler1/gun_sprite, $gun_handler2/gun_sprite, $gun_handler3/gun_sprite, $gun_handler4/gun_sprite]
+@onready var bullet_points: Array = [$gun_handler1/bullet_point, $gun_handler2/bullet_point, $gun_handler3/bullet_point, $gun_handler4/bullet_point]
 #@onready var fire_timer = $fire_timer
 
 var pos
 var rot
 var min_distance_to_shoot
-var time_since_last_call: float = 0.0
-var fire_rate: float = player_data.fire_rate
+var time_since_last_call_fire_rate1: float = 0.0
+var time_since_last_call_fire_rate2: float = 0.0
+var time_since_last_call_fire_rate3: float = 0.0
+var time_since_last_call_fire_rate4: float = 0.0
+@onready var times_fire_rates: Array = [time_since_last_call_fire_rate1, time_since_last_call_fire_rate2, time_since_last_call_fire_rate3, time_since_last_call_fire_rate4]
+@onready var fire_rates: Array = [player_data.fire_rate1, player_data.fire_rate2, player_data.fire_rate3, player_data.fire_rate4]
 var enemy_list_at_range: Array
 
 
@@ -65,7 +69,8 @@ func die():
 	_is_dead = true
 	#fire_timer.stop()
 	velocity = Vector2.ZERO
-	gun.visible = false
+	for gun in guns:
+		gun.visible = false
 	$anim.play("Dead")
 	await get_tree().create_timer(2).timeout
 	$anim.pause()
@@ -108,22 +113,26 @@ func target_enemy(delta):
 		if ray_cast.get_collider() and ray_cast.get_collider().get_class() == "CharacterBody2D":
 			#if fire_timer.is_stopped():
 				#fire_timer.start()
-			gun.look_at(closest_enemy.global_position)
+			for i in range(player_data.enabled_guns):
+				guns[i].look_at(closest_enemy.global_position)
 			pos = global_position
 			rot = rad_to_deg((closest_enemy.global_position - pos).angle())
 			if rot >= -90 and rot <= 90:
-				gun_spr.flip_v = false
+				for i in range(player_data.enabled_guns):
+					gun_sprs[i].flip_v = false
 				$Sprite2D.flip_h = false
 			else:
-				gun_spr.flip_v = true
+				for i in range(player_data.enabled_guns):
+					gun_sprs[i].flip_v = true
 				$Sprite2D.flip_h = true
 			 # Обновляем счетчик времени
-			time_since_last_call += delta
-			# Проверяем, прошло ли малое время с последнего вызова
-			if time_since_last_call >= fire_rate:
-				instance_bullet()
-				# Сбрасываем счетчик времени после вызова функции
-				time_since_last_call = 0.0
+			for i in range(player_data.enabled_guns):
+				times_fire_rates[i] += delta
+				# Проверяем, прошло ли малое время с последнего вызова
+				if times_fire_rates[i] >= fire_rates[i]:
+					instance_bullet(bullet_points[i], guns[i])
+					# Сбрасываем счетчик времени после вызова функции
+					times_fire_rates[i] = 0.0
 		#else:
 			#fire_timer.stop()
 	# If no enemies are nearby, pause the timer
@@ -145,7 +154,7 @@ func change_dead_state(value):
 	_is_dead = value
 
 
-func instance_bullet():
+func instance_bullet(bullet_point, gun):
 	var bullet = bullet_scene.instantiate()
 	bullet.direction = bullet_point.global_position - gun.global_position
 	bullet.global_position = bullet_point.global_position
@@ -153,7 +162,16 @@ func instance_bullet():
 
 
 func reset_states():
-	current_state = player_states.MOVE
+	player_data.health = player_data.default_health
+	player_data.ammo = player_data.default_ammo
+	player_data.fire_rate1 = player_data.default_fire_rate1
+	player_data.fire_rate2 = player_data.default_fire_rate2
+	player_data.fire_rate3 = player_data.default_fire_rate3
+	player_data.fire_rate4 = player_data.default_fire_rate4
+	player_data.min_distance_to_shoot = player_data.default_min_distance_to_shoot
+	player_data.enabled_guns = player_data.default_enabled_guns
+	change_dead_state(false)
+	#current_state = player_states.MOVE
 
 
 func instance_trail():
@@ -186,24 +204,40 @@ func flash():
 	#player_data.ammo -= 1
 
 
-func update_stats():
+func update_stats(cart_id: int = -1):
 	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
 	#print('update')
 	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
-	shoot_range_collider.shape.radius = player_data.min_distance_to_shoot
+	#shoot_range_collider.shape.radius = player_data.min_distance_to_shoot
+	
+	#if player_data.experience > 1000:
+		#player_data.enabled_guns = 2
+		
+	match cart_id:
+		0, 1, 2, 3:
+			if player_data.enabled_guns < player_data.ALL_WEAPON_SLOTS:
+				player_data.enabled_guns += 1
+				player_data.gun_in_inventory[player_data.enabled_guns-1] = cart_id
+				gun_sprs[player_data.enabled_guns-1].texture = load(player_data.gun_textures[cart_id])
+		4:
+			pass
+
+	for i in range(player_data.enabled_guns):
+		guns[i].visible = true
 
 
-func _on_collect_area_area_entered(_area):
-	#print('da')
-	update_stats()
+#func _on_collect_area_area_entered(_area):
+	##print('da')
+	#update_stats()
 
 
 func _on_shoot_range_area_body_entered(body):
-	enemy_list_at_range.append(body)
-	for enemy in enemy_list_at_range:
-		if enemy == null:
-			enemy_list_at_range.erase(enemy)
-	#print(enemy_list_at_range)
+	if enemy_list_at_range.size() < 10:
+		enemy_list_at_range.append(body)
+		for enemy in enemy_list_at_range:
+			if enemy == null:
+				enemy_list_at_range.erase(enemy)
+		#print(enemy_list_at_range)
 
 
 func _on_shoot_range_area_body_exited(body):

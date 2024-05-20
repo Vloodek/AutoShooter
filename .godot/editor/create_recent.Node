@@ -1,14 +1,14 @@
+Button
+Control
+Timer
 CollisionShape2D
 Area2D
-Timer
-Button
 ColorRect
 AnimationPlayer
 CheckBox
 HBoxContainer
 PanelContainer
 ItemList
-Control
 ProgressBar
 VBoxContainer
 Label

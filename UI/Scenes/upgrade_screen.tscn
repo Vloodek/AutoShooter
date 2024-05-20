@@ -134,26 +134,30 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -379.0
 offset_top = -142.0
-offset_right = -299.0
-offset_bottom = -103.0
+offset_right = 421.0
+offset_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(9.38316, 8.08625)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 texture_filter = 1
 layout_mode = 2
 alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="PanelContainer/HBoxContainer"]
-texture_filter = 1
+[node name="Button1" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+alignment = 0
 
-[node name="CheckBox2" type="CheckBox" parent="PanelContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+alignment = 0
 
-[node name="CheckBox3" type="CheckBox" parent="PanelContainer/HBoxContainer"]
+[node name="Button3" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+alignment = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -161,3 +165,6 @@ libraries = {
 }
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]

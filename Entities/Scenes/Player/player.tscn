@@ -1,16 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://bht2gbifhvqbk"]
+[gd_scene load_steps=16 format=3 uid="uid://bht2gbifhvqbk"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/player.gd" id="1_61qae"]
 [ext_resource type="Texture2D" uid="uid://dmncs68l1eedp" path="res://Sprites/Player_metroid.png" id="1_nepgj"]
 [ext_resource type="Shader" path="res://Shaders/hurt.gdshader" id="2_lwq4u"]
-[ext_resource type="Texture2D" uid="uid://bau0xyy1434si" path="res://Sprites/gun_1.png" id="3_uuing"]
 [ext_resource type="Script" path="res://Entities/Entities Scripts/camera.gd" id="4_3eo5q"]
+[ext_resource type="Texture2D" uid="uid://sdpb65esecew" path="res://Sprites/turret_01.png" id="5_p5v6a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3il0"]
 size = Vector2(14, 12)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_35fid"]
-radius = 11.5131
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly0rh"]
 shader = ExtResource("2_lwq4u")
@@ -179,31 +176,6 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g51li"]
 
-[sub_resource type="GDScript" id="GDScript_dx13k"]
-script/source = "# GunHandler1.gd
-extends Node
-class_name Pistol
-
-@onready var fire_timer = $fire_timer1
-var bullet_scene = preload(\"res://Entities/Scenes/Bullets/bullet_1.tscn\")
-var bullet_point: Node # Предполагается, что здесь будет точка выстрела для оружия 1
-var fire_rate = 0.5
-func _ready():
-	fire_timer.wait_time = fire_rate
-
-func shoot():
-	if player_data.ammo > 0:
-		instance_bullet()
-		player_data.ammo -= 1
-
-func instance_bullet():
-	var bullet = bullet_scene.instance()
-	bullet.direction = bullet_point.global_position - bullet_point.global_position
-	bullet.global_position = bullet_point.global_position
-	get_tree().root.add_child(bullet)
-
-"
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_flv02"]
 radius = 100.0
 
@@ -220,11 +192,6 @@ position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_f3il0")
 disabled = true
 
-[node name="collect_collider" type="CollisionShape2D" parent="."]
-visible = false
-light_mask = 0
-shape = SubResource("CircleShape2D_35fid")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_ly0rh")
@@ -240,6 +207,7 @@ libraries = {
 }
 
 [node name="collect_area" type="Area2D" parent="."]
+visible = false
 scale = Vector2(2.775, 2.948)
 collision_mask = 32
 
@@ -263,33 +231,59 @@ script = ExtResource("4_3eo5q")
 [node name="camera_shake" type="Timer" parent="Camera2D"]
 autostart = true
 
-[node name="gun_handler" type="Node2D" parent="."]
+[node name="gun_handler1" type="Node2D" parent="."]
 position = Vector2(11.5131, -10.0739)
-script = SubResource("GDScript_dx13k")
 
-[node name="gun_sprite" type="Sprite2D" parent="gun_handler"]
+[node name="gun_sprite" type="Sprite2D" parent="gun_handler1"]
 position = Vector2(4, 0)
-texture = ExtResource("3_uuing")
+texture = ExtResource("5_p5v6a")
 
-[node name="fire_timer1" type="Timer" parent="gun_handler"]
-wait_time = 4096.0
-one_shot = true
+[node name="bullet_point" type="Marker2D" parent="gun_handler1"]
+position = Vector2(11, 0)
 
-[node name="bullet_point" type="Marker2D" parent="gun_handler"]
+[node name="gun_handler2" type="Node2D" parent="."]
+visible = false
+position = Vector2(-17.7972, -10.0739)
+
+[node name="gun_sprite" type="Sprite2D" parent="gun_handler2"]
+position = Vector2(4, 0)
+texture = ExtResource("5_p5v6a")
+
+[node name="bullet_point" type="Marker2D" parent="gun_handler2"]
+position = Vector2(11, 0)
+
+[node name="gun_handler3" type="Node2D" parent="."]
+visible = false
+position = Vector2(-17.7972, 3.7192)
+
+[node name="gun_sprite" type="Sprite2D" parent="gun_handler3"]
+position = Vector2(4, 0)
+texture = ExtResource("5_p5v6a")
+
+[node name="bullet_point" type="Marker2D" parent="gun_handler3"]
+position = Vector2(11, 0)
+
+[node name="gun_handler4" type="Node2D" parent="."]
+visible = false
+position = Vector2(11.5131, 3.7192)
+
+[node name="gun_sprite" type="Sprite2D" parent="gun_handler4"]
+position = Vector2(4, 0)
+texture = ExtResource("5_p5v6a")
+
+[node name="bullet_point" type="Marker2D" parent="gun_handler4"]
 position = Vector2(11, 0)
 
 [node name="trail_timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
 
-[node name="fire_timer" type="Timer" parent="."]
-wait_time = 4096.0
-
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 40
 hit_from_inside = true
 
 [node name="shoot_range_area" type="Area2D" parent="."]
+visible = false
 collision_mask = 32
 
 [node name="shoot_range_collider" type="CollisionShape2D" parent="shoot_range_area"]
@@ -299,8 +293,6 @@ debug_color = Color(0.936665, 1.84822e-05, 0.631247, 0.42)
 [connection signal="area_entered" from="collect_area" to="." method="_on_collect_area_area_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="Camera2D/camera_shake" to="Camera2D" method="_on_camera_shake_timeout"]
-[connection signal="timeout" from="gun_handler/fire_timer1" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
-[connection signal="timeout" from="fire_timer" to="." method="_on_fire_timer_timeout"]
 [connection signal="body_entered" from="shoot_range_area" to="." method="_on_shoot_range_area_body_entered"]
 [connection signal="body_exited" from="shoot_range_area" to="." method="_on_shoot_range_area_body_exited"]

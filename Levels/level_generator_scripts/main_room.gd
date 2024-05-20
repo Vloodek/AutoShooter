@@ -8,9 +8,10 @@ class_name MainLevel
 @export var borders = Rect2(1,1,100,52)
 @export var grid_map_size = 16
 
-var enemy_counter = 0
+#var enemy_counter = 0
 var number_timeout = 0
-var number_enemy_at_group = 150
+var number_enemy_at_group = 3
+var max_number_enemy = 450
 var player
 var exit
 var map
@@ -106,8 +107,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 				enemy = enemy_scene.instantiate()
 		enemy.position = enemy_position
 		add_child(enemy)
-		enemy_counter += 1
-		print(enemy_counter)
+		#enemy_counter += 1
+		#print(enemy_counter)
 
 
 # enter pressed
@@ -130,7 +131,8 @@ func set_value_number_enemy_at_group(value):
 
 
 func _on_timer_timeout():
-	instance_enemy(enemy_difficult.easy, player.position, number_enemy_at_group)
+	if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
+		instance_enemy(enemy_difficult.easy, player.position, number_enemy_at_group)
 	number_timeout += 1
 	if number_timeout * timer.wait_time > level_timeout and !is_boss_spawned:
 		is_boss_spawned = true
@@ -147,12 +149,9 @@ func _on_timer_check_reload_timeout():
 
 
 func reload_game():
-	if get_tree():
-		#Очистка опыта на карте
-		var exp_pickups = get_tree().get_nodes_in_group("exp_pickup")
-		for exp_pickup in exp_pickups:
-			exp_pickup.queue_free()
-		player_data.health = player_data.default_health
-		player_data.ammo = player_data.default_ammo
-		player.change_dead_state(false)
-		get_tree().reload_current_scene()
+	#Очистка опыта на карте
+	var exp_pickups = get_tree().get_nodes_in_group("exp_pickup")
+	for exp_pickup in exp_pickups:
+		exp_pickup.queue_free()
+	player.reset_states()
+	get_tree().reload_current_scene()
