@@ -7,6 +7,7 @@ class_name MainMenu
 
 func _ready():
 	start_button.button_down.connect(on_start_pressed)
+	start_button.grab_focus()
 	exit_button.button_down.connect(on_exit_pressed)
 
 

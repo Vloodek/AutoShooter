@@ -14,9 +14,9 @@ const CHASE_SPEED = 60
 var time_since_last_call: float = 0.0
 
 
-func _ready():
+#func _ready():
 	#choose_direction()
-	pass
+	#pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,18 +37,18 @@ func _ready():
 #func move_right():
 	#velocity = Vector2.RIGHT * speed 
 	#move_and_slide()
-#
-#
+
+
 #func move_left():
 	#velocity = Vector2.LEFT * speed 
 	#move_and_slide()
-#
-#
+
+
 #func move_up():
 	#velocity = Vector2.UP * speed 
 	#move_and_slide()
-#
-#
+
+
 #func move_down():
 	#velocity = Vector2.DOWN * speed 
 	#move_and_slide()
@@ -57,8 +57,8 @@ func _ready():
 #func choose_direction():
 	#change_direction = randi() % 4
 	#random_direction()
-	
-	
+
+
 #func random_direction():
 	#match  change_direction:
 		#0:
@@ -79,9 +79,11 @@ func _on_timer_timeout():
 
 func _on_hitbox_area_entered(area):
 	if area.is_in_group("Bullet"):
-		instance_experience()
-		instance_fx()
-		queue_free()
+		HP -= area.power
+		if HP <= 0:
+			instance_experience()
+			instance_fx()
+			queue_free()
 
 
 func instance_fx():
@@ -126,7 +128,7 @@ func _physics_process(_delta : float):
 	#if time_since_last_call > 0.45:
 		#makepath()
 		#time_since_last_call = 0.0
-	
-	
+
+
 func makepath():
 	nav_agent.target_position = target.global_position

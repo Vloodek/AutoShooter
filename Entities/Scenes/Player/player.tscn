@@ -207,7 +207,6 @@ libraries = {
 }
 
 [node name="collect_area" type="Area2D" parent="."]
-visible = false
 scale = Vector2(2.775, 2.948)
 collision_mask = 32
 

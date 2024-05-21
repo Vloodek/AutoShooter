@@ -1,6 +1,6 @@
 extends Area2D
 
-var experience = 400
+var experience = 500
 @onready var player = get_tree().get_first_node_in_group("player")
 
 

@@ -1,7 +1,8 @@
 extends Area2D
 
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
-@export var speed = 50
+@export var speed = 0
+@export var power = 0
 var direction = Vector2.RIGHT
 # Called when the node enters the scene tree for the first time.
 

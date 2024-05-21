@@ -102,6 +102,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 2
 script = ExtResource("1_2c5dt")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -139,10 +140,12 @@ offset_right = 421.0
 offset_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 texture_filter = 1
 layout_mode = 2
+focus_mode = 2
 alignment = 1
 
 [node name="Button1" type="Button" parent="PanelContainer/HBoxContainer"]

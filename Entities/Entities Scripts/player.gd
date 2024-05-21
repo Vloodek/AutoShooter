@@ -28,7 +28,7 @@ var enemy_list_at_range: Array
 
 
 func _ready():
-	pass
+	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
 	#fire_timer.wait_time = player_data.fire_rate
 	#fire_timer.start()
 
@@ -159,6 +159,8 @@ func instance_bullet(bullet_point, gun, index):
 	var bullet = bullet_scene.instantiate()
 	bullet.direction = bullet_point.global_position - gun.global_position
 	bullet.global_position = bullet_point.global_position
+	bullet.speed = player_data.gun_bullet_speed[index]
+	bullet.power = player_data.gun_bullet_power[index]
 	get_tree().root.add_child(bullet)
 
 
@@ -203,15 +205,14 @@ func flash():
 	#player_data.ammo -= 1
 
 
-func update_stats(cart_id: int = -1):
+func update_stats(cart_id: int = -1, up_percent: float = 0, target_gun: int = -1):
 	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
+	#$collect_collider.scale *= 1.2
 	#print('update')
-	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
+	#$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
 	#shoot_range_collider.shape.radius = player_data.min_distance_to_shoot
-	
 	#if player_data.experience > 1000:
 		#player_data.enabled_guns = 2
-		
 	match cart_id:
 		0, 1, 2, 3:
 			if player_data.enabled_guns < player_data.ALL_WEAPON_SLOTS:
@@ -219,12 +220,16 @@ func update_stats(cart_id: int = -1):
 				player_data.gun_in_inventory[player_data.enabled_guns-1] = cart_id
 				gun_sprs[player_data.enabled_guns-1].texture = load(player_data.gun_textures[cart_id])
 				fire_rates[player_data.enabled_guns-1] = player_data.gun_fire_rates[cart_id]
+				guns[player_data.enabled_guns-1].visible = true
 		4:
-			pass
-
-	for i in range(player_data.enabled_guns):
-		guns[i].visible = true
-
+			player_data.collector_range_scale *= (1 + up_percent / 100)
+			$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
+		5:
+			fire_rates[player_data.gun_in_inventory[target_gun]] *= (1 - up_percent / 100)
+		6:
+			player_data.gun_bullet_power[player_data.gun_in_inventory[target_gun]] *= (1 + up_percent / 100)
+		7:
+			player_data.gun_bullet_speed[player_data.gun_in_inventory[target_gun]] *= (1 + up_percent / 100)
 
 #func _on_collect_area_area_entered(_area):
 	#print('da')

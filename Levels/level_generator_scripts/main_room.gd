@@ -11,21 +11,32 @@ class_name MainLevel
 #var enemy_counter = 0
 var number_timeout = 0
 var number_enemy_at_group = 30
-var max_number_enemy = 450
+var max_number_enemy = 300
 var player
 var exit
 var map
 var level_timeout = 300 # seconds
+@onready var timer = $Timer
+@onready var times_spawned = level_timeout / timer.wait_time
 var is_boss_spawned = false;
 var is_scene_reloading = false;
-@onready var timer = $Timer
 
 enum enemy_difficult {easy, middle, hard, boss} 
+var level_number_easy_enemies: Array = [180, 320]
+var level_number_middle_enemies: Array = [20, 80]
+var level_number_hard_enemies: Array = [0, 0]
+var level_difficult_enemies: Array = [1, 2]
+var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
+var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
+
 
 
 func _ready():
 	#randomize()
 	var start_number_enemy = 10
+	print(player_data.on_floor_level)
+	for i in range(current_level_groups_participants_to_spawn.size()):
+		current_level_groups_participants_to_spawn[i] = levels_numbers_enemies[i][player_data.on_floor_level] / times_spawned
 	generate_level(start_number_enemy)
 
 
@@ -84,26 +95,21 @@ func instance_player():
 
 func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 	#var player_position = player_pos # Предположим, что позиция игрока доступна через узел $Player
-	var player_detection_radius = 150 # Условный радиус обнаружения игрока для врагов
-	
+	var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
 	for i in range(number_enemy):
-		var enemy_spawned = false
 		var enemy_position = Vector2.ZERO
-		
-		while !enemy_spawned:
-			enemy_position = (map.pick_random() * borders.position) * grid_map_size
-			# Проверяем, находится ли точка спавна в пределах обнаружения игрока
-			if enemy_position.distance_to(player_pos) > player_detection_radius:
-				enemy_spawned = true	
+		var enemy_spawned = false
 		var enemy
 		match enemy_difficult_type:
-			enemy_difficult.easy:
-				enemy = enemy_scene.instantiate()
-			enemy_difficult.middle:
-				enemy = enemy_scene.instantiate()
-			enemy_difficult.hard:
+			enemy_difficult.easy, enemy_difficult.middle, enemy_difficult.hard:
+				while !enemy_spawned:
+					enemy_position = (map.pick_random() * borders.position) * grid_map_size
+					# Проверяем, находится ли точка спавна в пределах обнаружения игрока
+					if enemy_position.distance_to(player_pos) > player_detection_radius:
+						enemy_spawned = true
 				enemy = enemy_scene.instantiate()
 			enemy_difficult.boss:
+				enemy_position = exit.position
 				enemy = enemy_scene.instantiate()
 		enemy.position = enemy_position
 		add_child(enemy)
@@ -131,8 +137,10 @@ func set_value_number_enemy_at_group(value):
 
 
 func _on_timer_timeout():
+	print(get_tree().get_nodes_in_group("enemy_1").size())
 	if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
-		instance_enemy(enemy_difficult.easy, player.position, number_enemy_at_group)
+		for i in range(current_level_groups_participants_to_spawn.size()):	
+			instance_enemy(enemy_difficult.values()[i], player.position, current_level_groups_participants_to_spawn[i])
 	number_timeout += 1
 	if number_timeout * timer.wait_time > level_timeout and !is_boss_spawned:
 		is_boss_spawned = true
@@ -145,6 +153,7 @@ func _on_timer_timeout():
 func _on_timer_check_reload_timeout():
 	if exit.is_entered && !is_scene_reloading:
 		is_scene_reloading = true
+		player_data.on_floor_level += 1
 		reload_game()
 
 
