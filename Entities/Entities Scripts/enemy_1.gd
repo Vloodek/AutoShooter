@@ -111,8 +111,8 @@ func animation():
 		$anim.play("move_left")
 
 
-func _on_chase_box_area_entered(_area):
-	pass
+#func _on_chase_box_area_entered(_area):
+	#pass
 	#if area.is_in_group("follow"):
 		#new_direction = enemy_direction.CHASE
 

@@ -10,7 +10,7 @@ class_name MainLevel
 
 #var enemy_counter = 0
 var number_timeout = 0
-var number_enemy_at_group = 3
+var number_enemy_at_group = 30
 var max_number_enemy = 450
 var player
 var exit

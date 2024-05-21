@@ -7,10 +7,7 @@ static var upgrade_screen: Node
 
 static var default_health = 4
 static var default_ammo = 1000000000
-static var default_fire_rate1: float = 1.0
-static var default_fire_rate2: float = 1.0
-static var default_fire_rate3: float = 1.0
-static var default_fire_rate4: float = 1.0
+static var default_fire_rate: float = 1.0
 static var default_speed = 100
 static var default_collector_range_scale: float = 1.0
 static var default_min_distance_to_shoot: int = 100
@@ -21,15 +18,18 @@ static var enabled_guns = default_enabled_guns
 
 static var health = default_health
 static var ammo = default_ammo
-static var fire_rate1: float = default_fire_rate1
-static var fire_rate2: float = default_fire_rate2
-static var fire_rate3: float = default_fire_rate3
-static var fire_rate4: float = default_fire_rate4
+static var fire_rate1: float = default_fire_rate
+static var fire_rate2: float = default_fire_rate
+static var fire_rate3: float = default_fire_rate
+static var fire_rate4: float = default_fire_rate
 static var speed = default_speed
 static var collector_range_scale = default_collector_range_scale
 static var min_distance_to_shoot: int = default_min_distance_to_shoot
 
 static var gun_textures: Array = ["res://Sprites/turret_01.png", "res://Sprites/turret_02.png", "res://Sprites/turret_03.png", "res://Sprites/turret_04.png"]
+static var gun_fire_rates: Array = [1.0, 0.3, 1.5, 4]
+static var gun_fire_power: Array = [1.0, 0.1, 2, 6]
+static var gun_bullet_speed: Array = [25, 50, 40, 30]
 
 static var ALL_WEAPON_SLOTS = 4
 static var ALL_CART_TYPES = 4
@@ -49,7 +49,7 @@ static func add_experience(amount: int):
 
 static func check_level_up():
 	var experience_needed = get_experience_needed()
-	while experience >= experience_needed:
+	while experience >= experience_needed && upgrade_screen.is_showing == false:
 		level += 1
 		update_attributes_for_level()
 		experience_needed = get_experience_needed()
@@ -58,7 +58,7 @@ static func check_level_up():
 
 
 static func get_experience_needed() -> int:
-	#print(level)
+	print("level is ", level)
 	if level == 1:
 		return 500
 	elif level >= 2 and level <= 7:

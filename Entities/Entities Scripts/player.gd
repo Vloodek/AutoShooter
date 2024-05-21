@@ -130,7 +130,7 @@ func target_enemy(delta):
 				times_fire_rates[i] += delta
 				# Проверяем, прошло ли малое время с последнего вызова
 				if times_fire_rates[i] >= fire_rates[i]:
-					instance_bullet(bullet_points[i], guns[i])
+					instance_bullet(bullet_points[i], guns[i], i)
 					# Сбрасываем счетчик времени после вызова функции
 					times_fire_rates[i] = 0.0
 		#else:
@@ -154,7 +154,8 @@ func change_dead_state(value):
 	_is_dead = value
 
 
-func instance_bullet(bullet_point, gun):
+func instance_bullet(bullet_point, gun, index):
+	#var bullet = bullet_scene.instantiate(player_data.gun_bullet_speed[index])
 	var bullet = bullet_scene.instantiate()
 	bullet.direction = bullet_point.global_position - gun.global_position
 	bullet.global_position = bullet_point.global_position
@@ -164,10 +165,8 @@ func instance_bullet(bullet_point, gun):
 func reset_states():
 	player_data.health = player_data.default_health
 	player_data.ammo = player_data.default_ammo
-	player_data.fire_rate1 = player_data.default_fire_rate1
-	player_data.fire_rate2 = player_data.default_fire_rate2
-	player_data.fire_rate3 = player_data.default_fire_rate3
-	player_data.fire_rate4 = player_data.default_fire_rate4
+	for fire_rate in fire_rates:
+		fire_rate = player_data.default_fire_rate
 	player_data.min_distance_to_shoot = player_data.default_min_distance_to_shoot
 	player_data.enabled_guns = player_data.default_enabled_guns
 	change_dead_state(false)
@@ -219,6 +218,7 @@ func update_stats(cart_id: int = -1):
 				player_data.enabled_guns += 1
 				player_data.gun_in_inventory[player_data.enabled_guns-1] = cart_id
 				gun_sprs[player_data.enabled_guns-1].texture = load(player_data.gun_textures[cart_id])
+				fire_rates[player_data.enabled_guns-1] = player_data.gun_fire_rates[cart_id]
 		4:
 			pass
 
@@ -227,7 +227,7 @@ func update_stats(cart_id: int = -1):
 
 
 #func _on_collect_area_area_entered(_area):
-	##print('da')
+	#print('da')
 	#update_stats()
 
 
