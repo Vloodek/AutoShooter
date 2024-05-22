@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-@export var speed = 10
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
 @onready var exp_scene = preload("res://Interactables/scenes/exp.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
@@ -8,10 +7,13 @@ enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
 var change_direction
 var HP = 3
-const CHASE_SPEED = 60
+var speed = 20
 @onready var target = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
 var time_since_last_call: float = 0.0
+var knockback_strength = 800
+var need_to_apply_knockback = false
+var knockback_velocity
 
 
 #func _ready():
@@ -80,10 +82,18 @@ func _on_timer_timeout():
 func _on_hitbox_area_entered(area):
 	if area.is_in_group("Bullet"):
 		HP -= area.power
+		apply_knockback(area)
 		if HP <= 0:
 			instance_experience()
 			instance_fx()
 			queue_free()
+
+
+# Функция для применения отталкивания
+func apply_knockback(bullet):
+	var knockback_direction = (global_position - bullet.global_position).normalized()
+	knockback_velocity = knockback_direction * knockback_strength
+	need_to_apply_knockback = true
 
 
 func instance_fx():
@@ -100,8 +110,8 @@ func instance_experience():
 
 
 #func chase_state():
-	#var chase_speed = 60
-	#velocity = position.direction_to(target.global_position ) * chase_speed
+	#var speed = 60
+	#velocity = position.direction_to(target.global_position ) * speed
 	#animation()
 	#move_and_slide()
 
@@ -121,7 +131,10 @@ func animation():
 
 func _physics_process(_delta : float):
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
-	velocity = dir * CHASE_SPEED
+	velocity = dir * speed
+	if need_to_apply_knockback:
+		velocity += knockback_velocity
+		need_to_apply_knockback = false
 	animation()
 	move_and_slide()
 	#time_since_last_call += delta

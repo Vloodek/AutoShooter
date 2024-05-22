@@ -28,7 +28,8 @@ var level_number_hard_enemies: Array = [0, 0]
 var level_difficult_enemies: Array = [1, 2]
 var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
 var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
-
+var hp_enemies: Array = [3, 10, 50, 1000]
+var speed_enemies: Array = [20, 60, 50, 70]
 
 
 func _ready():
@@ -100,17 +101,27 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 		var enemy_position = Vector2.ZERO
 		var enemy_spawned = false
 		var enemy
-		match enemy_difficult_type:
-			enemy_difficult.easy, enemy_difficult.middle, enemy_difficult.hard:
-				while !enemy_spawned:
-					enemy_position = (map.pick_random() * borders.position) * grid_map_size
-					# Проверяем, находится ли точка спавна в пределах обнаружения игрока
-					if enemy_position.distance_to(player_pos) > player_detection_radius:
-						enemy_spawned = true
-				enemy = enemy_scene.instantiate()
-			enemy_difficult.boss:
-				enemy_position = exit.position
-				enemy = enemy_scene.instantiate()
+		if enemy_difficult_type == enemy_difficult.boss:
+			enemy_position = exit.position
+			enemy = enemy_scene.instantiate()
+			enemy.HP = hp_enemies[enemy_difficult.boss]
+		else:
+			while !enemy_spawned:
+				enemy_position = (map.pick_random() * borders.position) * grid_map_size
+				# Проверяем, находится ли точка спавна в пределах обнаружения игрока
+				if enemy_position.distance_to(player_pos) > player_detection_radius:
+					enemy_spawned = true
+			enemy = enemy_scene.instantiate()
+			match enemy_difficult_type:
+				enemy_difficult.easy:
+					enemy.HP = hp_enemies[enemy_difficult.easy]
+					enemy.speed = speed_enemies[enemy_difficult.easy]
+				enemy_difficult.middle:
+					enemy.HP = hp_enemies[enemy_difficult.middle]
+					enemy.speed = speed_enemies[enemy_difficult.middle]
+				enemy_difficult.hard:
+					enemy.HP = hp_enemies[enemy_difficult.hard]
+					enemy.speed = speed_enemies[enemy_difficult.hard]
 		enemy.position = enemy_position
 		add_child(enemy)
 		#enemy_counter += 1
@@ -139,7 +150,7 @@ func set_value_number_enemy_at_group(value):
 func _on_timer_timeout():
 	print(get_tree().get_nodes_in_group("enemy_1").size())
 	if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
-		for i in range(current_level_groups_participants_to_spawn.size()):	
+		for i in range(current_level_groups_participants_to_spawn.size()):
 			instance_enemy(enemy_difficult.values()[i], player.position, current_level_groups_participants_to_spawn[i])
 	number_timeout += 1
 	if number_timeout * timer.wait_time > level_timeout and !is_boss_spawned:
