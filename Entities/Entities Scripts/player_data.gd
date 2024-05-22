@@ -5,7 +5,7 @@ class_name player_data
 # Статическое свойство для ссылки на экран прокачки
 static var upgrade_screen: Node
 
-static var default_health = 4
+static var default_health = 100
 static var default_ammo = 1000000000
 static var default_fire_rate: float = 1.0
 static var default_speed = 100
@@ -29,6 +29,7 @@ static var fire_rate4: float = default_fire_rate
 static var speed = default_speed
 static var collector_range_scale = default_collector_range_scale
 static var min_distance_to_shoot: int = default_min_distance_to_shoot
+static var default_experience = 0
 static var default_gun_fire_rates: Array = [1.0, 0.1, 1.5, 10.0]  #smaller better
 static var default_gun_bullet_power: Array = [0.8, 0.05, 2.0, 6.0]  #bigger better 
 static var default_gun_bullet_speed: Array = [25.0, 50.0, 40.0, 30.0]  #bigger better
@@ -41,9 +42,11 @@ static var knockback_strength = default_knockback_strength
 
 static var ALL_WEAPON_SLOTS = 4
 static var ALL_CART_TYPES = 8
-static var experience = 0
-static var level = 1
-static var on_floor_level = 0
+static var experience = default_experience
+static var default_level = 1
+static var level = default_level
+static var default_on_floor_level = 0
+static var on_floor_level = default_on_floor_level
 
 static var gun_in_inventory: Array = default_gun_in_inventory
 

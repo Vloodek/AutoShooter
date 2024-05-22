@@ -14,7 +14,9 @@ var input_movement = Vector2()
 @onready var gun_sprs: Array = [$gun_handler1/gun_sprite, $gun_handler2/gun_sprite, $gun_handler3/gun_sprite, $gun_handler4/gun_sprite]
 @onready var bullet_points: Array = [$gun_handler1/bullet_point, $gun_handler2/bullet_point, $gun_handler3/bullet_point, $gun_handler4/bullet_point]
 #@onready var fire_timer = $fire_timer
+@onready var ground = get_node("../ground")
 
+@onready var walls_to_break: Array
 var pos
 var rot
 var min_distance_to_shoot
@@ -172,6 +174,19 @@ func reset_states():
 		fire_rate = player_data.default_fire_rate
 	player_data.min_distance_to_shoot = player_data.default_min_distance_to_shoot
 	player_data.enabled_guns = player_data.default_enabled_guns
+	player_data.experience = player_data.default_experience
+	player_data.level = player_data.default_level
+	player_data.on_floor_level = player_data.default_on_floor_level
+	player_data.knockback_strength = player_data.default_knockback_strength
+	player_data.gun_fire_rates = player_data.default_gun_fire_rates
+	player_data.gun_bullet_power = player_data.default_gun_bullet_power
+	player_data.gun_bullet_speed = player_data.default_gun_bullet_speed
+	player_data.collector_range_scale = player_data.default_collector_range_scale
+	player_data.is_without_gun_level_tier_2 = true
+	player_data.is_without_gun_level_tier_3 = true
+	player_data.is_without_gun_level_tier_4 = true
+	player_data.gun_in_inventory = player_data.default_gun_in_inventory
+
 	change_dead_state(false)
 	#current_state = player_states.MOVE
 
@@ -258,3 +273,35 @@ func _on_shoot_range_area_body_exited(body):
 		#flash()
 		#print(player_data.health)
 		#player_data.health -= body.damage
+
+
+func _on_break_area_body_entered(body):
+	if body is TileMap:
+		if $break_timer.is_stopped():
+			$break_timer.start()
+		walls_to_break.append(body)
+
+
+var tileset_directions: Array = [
+ TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
+ TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
+ TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
+ TileSet.CELL_NEIGHBOR_LEFT_SIDE,
+ TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
+ TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
+ TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
+ TileSet.CELL_NEIGHBOR_TOP_SIDE]
+
+func _on_break_timer_timeout():
+	var collision_position
+	for body in walls_to_break:
+		for direction in tileset_directions:
+			collision_position = body.get_neighbor_cell(body.local_to_map(position), direction)
+			if body.get_cell_atlas_coords(0, collision_position) == Vector2i(0, 7):
+				body.erase_cell(0, collision_position)
+				ground.set_cell(0, collision_position, 0, Vector2i(4, 7))
+
+
+func _on_break_area_body_exited(body):
+	if body is TileMap:
+		walls_to_break.erase(body)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bht2gbifhvqbk"]
+[gd_scene load_steps=17 format=3 uid="uid://bht2gbifhvqbk"]
 
 [ext_resource type="Script" path="res://Entities/Entities Scripts/player.gd" id="1_61qae"]
 [ext_resource type="Shader" path="res://Shaders/hurt.gdshader" id="2_lwq4u"]
@@ -24,10 +24,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": []
+"values": [1]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -174,11 +174,15 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_608oh"]
+radius = 3.72787
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g51li"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flv02"]
 radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nfgrh"]
+radius = 17.2414
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
@@ -288,6 +292,15 @@ collision_mask = 32
 shape = SubResource("CircleShape2D_flv02")
 debug_color = Color(0.936665, 1.84822e-05, 0.631247, 0.42)
 
+[node name="break_area" type="Area2D" parent="."]
+collision_mask = 8
+
+[node name="break_collider" type="CollisionShape2D" parent="break_area"]
+shape = SubResource("CircleShape2D_nfgrh")
+
+[node name="break_timer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="area_entered" from="collect_area" to="." method="_on_collect_area_area_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
@@ -295,3 +308,6 @@ debug_color = Color(0.936665, 1.84822e-05, 0.631247, 0.42)
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
 [connection signal="body_entered" from="shoot_range_area" to="." method="_on_shoot_range_area_body_entered"]
 [connection signal="body_exited" from="shoot_range_area" to="." method="_on_shoot_range_area_body_exited"]
+[connection signal="body_entered" from="break_area" to="." method="_on_break_area_body_entered"]
+[connection signal="body_exited" from="break_area" to="." method="_on_break_area_body_exited"]
+[connection signal="timeout" from="break_timer" to="." method="_on_break_timer_timeout"]

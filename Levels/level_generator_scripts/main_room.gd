@@ -67,7 +67,7 @@ func instance_empty_rooms():
 	for tile in all_cells:
 		if !map.has(Vector2(tile.x, tile.y)):
 			using_cells.append(tile)
-			ground.set_cell(0,Vector2i(tile.x, tile.y), 2,Vector2i(3,4)) # Заготовленная плитка ставится на тайлмап ground
+			ground.set_cell(0, Vector2i(tile.x, tile.y), 2, Vector2i(3,4)) # Заготовленная плитка ставится на тайлмап ground
 	tilemap.set_cells_terrain_connect(ground_layer, using_cells, ground_layer, ground_layer, false)
 	#tilemap.set_cells_terrain_path(ground_layer, using_cells, ground_layer, ground_layer, false)
 	return [walker, map]

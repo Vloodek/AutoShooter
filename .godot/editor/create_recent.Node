@@ -1,8 +1,8 @@
-Button
-Control
 Timer
 CollisionShape2D
 Area2D
+Button
+Control
 ColorRect
 AnimationPlayer
 CheckBox
