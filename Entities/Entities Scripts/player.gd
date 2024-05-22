@@ -34,6 +34,7 @@ func _ready():
 
 
 func _process(delta):
+	#print(player_data.health)
 	if player_data.health <= 0:
 		current_state = player_states.DEAD
 		die()
@@ -187,9 +188,11 @@ func _on_trail_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	if area.is_in_group("enemy"):
+	print(area.name)
+	if area.name == "hitbox_enemy":
 		flash()
-		player_data.health -= 0
+		#print(player_data.health)
+		player_data.health -= area.damage
 
 
 func flash():
@@ -247,3 +250,11 @@ func _on_shoot_range_area_body_entered(body):
 
 func _on_shoot_range_area_body_exited(body):
 	enemy_list_at_range.erase(body)
+
+
+#func _on_hitbox_body_entered(body):
+	#print(body.name)
+	#if body.name == "enemy_1":
+		#flash()
+		#print(player_data.health)
+		#player_data.health -= body.damage

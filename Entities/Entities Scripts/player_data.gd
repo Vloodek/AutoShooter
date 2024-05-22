@@ -16,6 +16,7 @@ static var default_gun_in_inventory = [0, 0, 0, 0]
 static var is_without_gun_level_tier_2 = true
 static var is_without_gun_level_tier_3 = true
 static var is_without_gun_level_tier_4 = true
+static var default_knockback_strength = 400
 
 static var enabled_guns = default_enabled_guns
 
@@ -36,6 +37,7 @@ static var gun_textures: Array = ["res://Sprites/turret_01.png", "res://Sprites/
 static var gun_fire_rates = default_gun_fire_rates
 static var gun_bullet_power = default_gun_bullet_power
 static var gun_bullet_speed = default_gun_bullet_speed
+static var knockback_strength = default_knockback_strength
 
 static var ALL_WEAPON_SLOTS = 4
 static var ALL_CART_TYPES = 8

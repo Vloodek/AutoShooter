@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deyw8k5kh6nrl"
-path="res://.godot/imported/weaponary.png-3308a79caec4d1c1be7153d0cb6466a5.ctex"
+uid="uid://bje2ewbg4hoqo"
+path="res://.godot/imported/walls.png-b4f06cd25e4dc0538944057515f986a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/weaponary.png"
-dest_files=["res://.godot/imported/weaponary.png-3308a79caec4d1c1be7153d0cb6466a5.ctex"]
+source_file="res://Sprites/walls.png"
+dest_files=["res://.godot/imported/walls.png-b4f06cd25e4dc0538944057515f986a6.ctex"]
 
 [params]
 

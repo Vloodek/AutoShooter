@@ -12,3 +12,7 @@ res://UI/Scenes/upgrade_screen.tscn
 res://Interactables/scenes/exp.tscn
 res://Interactables/scenes/exit.tscn
 res://Entities/Entities Scripts/enemy_1.gd
+res://Interactables/interactables_scripts/dead_area.gd
+res://Entities/Scenes/Enemies/hitbox_enemy.gd
+res://Entities/Entities Scripts/player_data.gd
+res://Levels/level_generator_scripts/walker.gd

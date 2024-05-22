@@ -36,7 +36,7 @@ func walk(steps):
 func is_step():
 	var target_position = position + direction
 	if borders.has_point(target_position):
-		steps_since_turn +=1
+		steps_since_turn += 1
 		position = target_position
 		return true
 	else:

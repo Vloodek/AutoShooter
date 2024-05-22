@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name enemy_data
+
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
 @onready var exp_scene = preload("res://Interactables/scenes/exp.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
@@ -8,18 +10,21 @@ var new_direction = enemy_direction.RIGHT
 var change_direction
 var HP = 3
 var speed = 20
+var damage = 1
 @onready var target = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
 var time_since_last_call: float = 0.0
-var knockback_strength = 800
 var need_to_apply_knockback = false
 var knockback_velocity
 
 
 #func _ready():
-	#choose_direction()
+	#add_to_group("enemy_1")
 	#pass
 
+
+func update_damage():
+	$hitbox_enemy.damage = damage
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
@@ -74,6 +79,10 @@ var knockback_velocity
 	#new_direction = enemy_direction.values()[change_direction]
 
 
+func set_texture(texture):
+	$Sprite2D.texture = load(texture)
+
+
 func _on_timer_timeout():
 	makepath()
 	$Timer.start()
@@ -92,7 +101,7 @@ func _on_hitbox_area_entered(area):
 # Функция для применения отталкивания
 func apply_knockback(bullet):
 	var knockback_direction = (global_position - bullet.global_position).normalized()
-	knockback_velocity = knockback_direction * knockback_strength
+	knockback_velocity = knockback_direction * player_data.knockback_strength
 	need_to_apply_knockback = true
 
 
@@ -117,10 +126,11 @@ func instance_experience():
 
 
 func animation():
+	$anim.play("move")
 	if velocity > Vector2.ZERO:
-		$anim.play("move_right")
-	if velocity < Vector2.ZERO:
-		$anim.play("move_left")
+		$Sprite2D.flip_h = false
+	else:
+		$Sprite2D.flip_h = true
 
 
 #func _on_chase_box_area_entered(_area):
