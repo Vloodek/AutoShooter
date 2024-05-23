@@ -16,7 +16,7 @@ var input_movement = Vector2()
 #@onready var fire_timer = $fire_timer
 @onready var ground = get_node("../ground")
 
-@onready var walls_to_break: Array
+@onready var walls_to_check_break: Array
 var pos
 var rot
 var min_distance_to_shoot
@@ -27,6 +27,16 @@ var time_since_last_call_fire_rate4: float = 0.0
 @onready var times_fire_rates: Array = [time_since_last_call_fire_rate1, time_since_last_call_fire_rate2, time_since_last_call_fire_rate3, time_since_last_call_fire_rate4]
 @onready var fire_rates: Array = [player_data.fire_rate1, player_data.fire_rate2, player_data.fire_rate3, player_data.fire_rate4]
 var enemy_list_at_range: Array
+
+var tileset_directions: Array = [
+ TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
+ TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
+ TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
+ TileSet.CELL_NEIGHBOR_LEFT_SIDE,
+ TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
+ TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
+ TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
+ TileSet.CELL_NEIGHBOR_TOP_SIDE]
 
 
 func _ready():
@@ -279,29 +289,34 @@ func _on_break_area_body_entered(body):
 	if body is TileMap:
 		if $break_timer.is_stopped():
 			$break_timer.start()
-		walls_to_break.append(body)
+		walls_to_check_break.append(body)
 
 
-var tileset_directions: Array = [
- TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
- TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
- TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
- TileSet.CELL_NEIGHBOR_LEFT_SIDE,
- TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
- TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
- TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
- TileSet.CELL_NEIGHBOR_TOP_SIDE]
+var walls_to_break: Array = []
 
 func _on_break_timer_timeout():
 	var collision_position
-	for body in walls_to_break:
+	var is_at_least_one_erase = false
+	for body in walls_to_check_break:
 		for direction in tileset_directions:
 			collision_position = body.get_neighbor_cell(body.local_to_map(position), direction)
 			if body.get_cell_atlas_coords(0, collision_position) == Vector2i(0, 7):
-				body.erase_cell(0, collision_position)
-				ground.set_cell(0, collision_position, 0, Vector2i(4, 7))
+				for obj in walls_to_break:
+					if obj[0] == body && obj[1] == collision_position:
+						obj[0].erase_cell(0, obj[1])
+						ground.set_cell(0, obj[1], 0, Vector2i(4, 7))
+						walls_to_break.erase(obj)
+						is_at_least_one_erase = true
+				if !is_at_least_one_erase:
+					#body.erase_cell(0, collision_position)
+					#ground.set_cell(0, collision_position, 0, Vector2i(4, 7))
+					walls_to_break.append([body, collision_position])
 
+			#for obj in walls_to_break:
+				#obj[0].erase_cell(0, obj[1])
+				#ground.set_cell(0, obj[1], 0, Vector2i(4, 7))
+				#walls_to_break.erase(obj)
 
 func _on_break_area_body_exited(body):
 	if body is TileMap:
-		walls_to_break.erase(body)
+		walls_to_check_break.erase(body)

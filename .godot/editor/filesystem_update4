@@ -10,5 +10,3 @@ res://UI/Scenes/loading_screen.tscn
 res://UI/Scenes/upgrade_screen.tscn
 res://Interactables/scenes/exp.tscn
 res://Interactables/scenes/exit.tscn
-res://Levels/level_generator_scripts/main_room.gd
-res://Entities/Entities Scripts/player_data.gd
