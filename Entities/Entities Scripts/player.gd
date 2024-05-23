@@ -3,9 +3,12 @@ extends CharacterBody2D
 var current_state = player_states.MOVE
 enum player_states {MOVE, DEAD}
 var _is_dead = false
+var walls_to_break: Array = []
 
 @onready var bullet_scene = preload("res://Entities/Scenes/Bullets/bullet_1.tscn")
 @onready var trail_scene = preload("res://Entities/Scenes/FX/scent_trail.tscn")
+@onready var particle_scene = preload("res://Entities/particle.tscn")
+@onready var break_particle_scene = preload("res://Entities/break_particle.tscn")
 @export var speed: int
 var input_movement = Vector2()
 @onready var ray_cast = $RayCast2D
@@ -43,10 +46,15 @@ func _ready():
 	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
 	#fire_timer.wait_time = player_data.fire_rate
 	#fire_timer.start()
+	for i in range(player_data.enabled_guns):
+		print("ready ", gun_sprs, fire_rates)
+		gun_sprs[i].texture = load(player_data.gun_textures[player_data.gun_in_inventory[i]])
+		fire_rates[i] = player_data.gun_fire_rates[player_data.gun_in_inventory[i]]
+		guns[i].visible = true
 
 
 func _process(delta):
-	#print(player_data.health)
+	#print("enabled_guns ", player_data.enabled_guns)
 	if player_data.health <= 0:
 		current_state = player_states.DEAD
 		die()
@@ -213,7 +221,7 @@ func _on_trail_timer_timeout():
 
 
 func _on_hitbox_area_entered(area):
-	print(area.name)
+	#print(area.name)
 	if area.name == "hitbox_enemy":
 		flash()
 		#print(player_data.health)
@@ -234,6 +242,7 @@ func flash():
 
 
 func update_stats(cart_id: int = -1, up_percent: float = 0, target_gun: int = -1):
+	print("update_stats ", gun_sprs, fire_rates)
 	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
 	#$collect_collider.scale *= 1.2
 	#print('update')
@@ -292,11 +301,12 @@ func _on_break_area_body_entered(body):
 		walls_to_check_break.append(body)
 
 
-var walls_to_break: Array = []
-
 func _on_break_timer_timeout():
 	var collision_position
 	var is_at_least_one_erase = false
+	while walls_to_break.size() > 9:
+		walls_to_break[0][2].queue_free()
+		walls_to_break.pop_front()
 	for body in walls_to_check_break:
 		for direction in tileset_directions:
 			collision_position = body.get_neighbor_cell(body.local_to_map(position), direction)
@@ -306,16 +316,21 @@ func _on_break_timer_timeout():
 						obj[0].erase_cell(0, obj[1])
 						ground.set_cell(0, obj[1], 0, Vector2i(4, 7))
 						walls_to_break.erase(obj)
+						obj[2].queue_free()
 						is_at_least_one_erase = true
 				if !is_at_least_one_erase:
 					#body.erase_cell(0, collision_position)
 					#ground.set_cell(0, collision_position, 0, Vector2i(4, 7))
-					walls_to_break.append([body, collision_position])
+					var particle = break_particle_scene.instantiate()
+					particle.global_position =  body.map_to_local(collision_position)
+					get_tree().root.add_child(particle)
+					walls_to_break.append([body, collision_position, particle])
 
 			#for obj in walls_to_break:
 				#obj[0].erase_cell(0, obj[1])
 				#ground.set_cell(0, obj[1], 0, Vector2i(4, 7))
 				#walls_to_break.erase(obj)
+
 
 func _on_break_area_body_exited(body):
 	if body is TileMap:

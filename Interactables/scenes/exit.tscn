@@ -61,3 +61,4 @@ shape = SubResource("RectangleShape2D_qvxox")
 debug_color = Color(0.732386, 0.310992, 0.885751, 0.42)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

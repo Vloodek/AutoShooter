@@ -11,7 +11,9 @@ var change_direction
 var HP = 3
 var speed = 20
 var damage = 1
+var is_it_boss = false
 @onready var target = get_node("../Player")
+@onready var exit = get_node("../exit")
 # Called when the node enters the scene tree for the first time.
 var time_since_last_call: float = 0.0
 var need_to_apply_knockback = false
@@ -25,6 +27,12 @@ var knockback_velocity
 
 func update_damage():
 	$hitbox_enemy.damage = damage
+
+
+func update_hitbox_scale(value_scale):
+	$hitbox_enemy.scale.x = value_scale
+	$hitbox_enemy.scale.y = value_scale / 2
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
@@ -96,6 +104,8 @@ func _on_hitbox_area_entered(area):
 			instance_experience()
 			instance_fx()
 			queue_free()
+			if is_it_boss:
+				exit.is_available = true
 
 
 # Функция для применения отталкивания

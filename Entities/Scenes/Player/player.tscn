@@ -304,7 +304,6 @@ visible = false
 shape = SubResource("CircleShape2D_nfgrh")
 
 [node name="break_timer" type="Timer" parent="."]
-wait_time = 0.1
 
 [connection signal="area_entered" from="collect_area" to="." method="_on_collect_area_area_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

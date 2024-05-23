@@ -4,6 +4,7 @@ class_name MainLevel
 @onready var exit_scene = preload("res://Interactables/scenes/exit.tscn")
 @onready var player_scene = preload("res://Entities/Scenes/Player/player.tscn")
 @onready var enemy_scene = preload("res://Entities/Scenes/Enemies/enemy_1.tscn")
+@onready var end_menu = preload("res://UI/Scenes/end_menu.tscn") as PackedScene
 
 @export var borders = Rect2(1,1,100,52)
 @export var grid_map_size = 16
@@ -13,10 +14,11 @@ var enemy_textures: Array = ["res://Sprites/MedZ_Animation.png", "res://Sprites/
 var number_timeout = 0
 var number_enemy_at_group = 30
 var max_number_enemy = 300
+var boss_scale = 4
 var player
 var exit
 var map
-var level_timeout = 30 # seconds
+var level_timeout = 300 # seconds
 @onready var timer = $Timer
 @onready var times_spawned = level_timeout / timer.wait_time
 var is_boss_spawned = false
@@ -30,17 +32,24 @@ var level_number_hard_enemies: Array = [0, 0]
 var level_difficult_enemies: Array = [1, 2]
 var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
 var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
-var hp_enemies: Array = [3, 10, 50, 1000]
+var hp_enemies: Array = [3, 10, 50, 3]
 var speed_enemies: Array = [20, 60, 50, 70]
 var enemy_damage: Array = [1, 4, 10, 30]
+var level_timeouts: Array = [30, 30, 30]
+var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
+var end_floor = level_timeouts.size() # now it is 0-1-2 (3 floors)
 
 
 func _ready():
 	#randomize()
 	var start_number_enemy = 10
-	print(player_data.on_floor_level)
+	#print(player_data.on_floor_level)
+	level_timeout = level_timeouts[player_data.on_floor_level]
 	for i in range(current_level_groups_participants_to_spawn.size()):
 		current_level_groups_participants_to_spawn[i] = levels_numbers_enemies[i][player_data.on_floor_level] / times_spawned
+	#if player_data.on_floor_level == end_floor:
+		#get_tree().change_scene_to_packed(end_menu)
+	#else:
 	generate_level(start_number_enemy)
 
 
@@ -99,7 +108,6 @@ func instance_player():
 
 func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 	#var player_position = player_pos # Предположим, что позиция игрока доступна через узел $Player
-	var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
 	for i in range(number_enemy):
 		var enemy_position = Vector2.ZERO
 		var enemy_spawned = false
@@ -111,6 +119,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 			enemy.speed = speed_enemies[enemy_difficult.boss]
 			enemy.damage = enemy_damage[enemy_difficult.boss]
 			enemy.set_texture(enemy_textures[enemy_difficult.boss])
+			enemy.update_hitbox_scale(boss_scale)
+			enemy.is_it_boss = true
 		else:
 			while !enemy_spawned:
 				var map_pick = map.pick_random()
@@ -149,8 +159,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 # enter pressed
 func _input(_event):
 	if player._is_dead && Input.is_action_just_pressed("ui_accept") && !is_scene_reloading:
-			is_scene_reloading = true
-			reload_game()
+		is_scene_reloading = true
+		reload_game(true)
 
 
 #func set_value_timer_ended_counter(value):
@@ -169,7 +179,7 @@ func _on_timer_timeout():
 	print(get_tree().get_nodes_in_group("enemy_1").size())
 	if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
 		for i in range(current_level_groups_participants_to_spawn.size()):
-			print(enemy_difficult.values()[i], " ", current_level_groups_participants_to_spawn[i])
+			#print(enemy_difficult.values()[i], " ", current_level_groups_participants_to_spawn[i])
 			instance_enemy(enemy_difficult.values()[i], player.position, current_level_groups_participants_to_spawn[i])
 	number_timeout += 1
 	if number_timeout * timer.wait_time > level_timeout && !is_boss_spawned:
@@ -181,16 +191,24 @@ func _on_timer_timeout():
 
 
 func _on_timer_check_reload_timeout():
-	if exit.is_entered && !is_scene_reloading:
+	if exit.is_entered && exit.is_available && !is_scene_reloading:
 		is_scene_reloading = true
 		player_data.on_floor_level += 1
-		reload_game()
+		if player_data.on_floor_level == end_floor:
+			get_tree().change_scene_to_packed(end_menu)
+		else:
+			reload_game(false)
 
 
-func reload_game():
+func reload_game(is_player_dead):
 	#Очистка опыта на карте
 	var exp_pickups = get_tree().get_nodes_in_group("exp_pickup")
 	for exp_pickup in exp_pickups:
 		exp_pickup.queue_free()
-	player.reset_states()
+	#particles
+	var particles = get_tree().get_nodes_in_group("particles")
+	for particle in particles:
+		particle.queue_free()
+	if is_player_dead:
+		player.reset_states()
 	get_tree().reload_current_scene()

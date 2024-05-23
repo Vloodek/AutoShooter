@@ -1,3 +1,6 @@
+Sprite2D
+GPUParticles2D
+CPUParticles2D
 Timer
 CollisionShape2D
 Area2D
@@ -10,5 +13,3 @@ HBoxContainer
 PanelContainer
 ItemList
 ProgressBar
-VBoxContainer
-Label

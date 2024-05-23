@@ -1,6 +1,7 @@
 extends Area2D
 
 var is_entered = false;
+var is_available = false;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,3 +18,8 @@ func _on_body_entered(body):
 	if body.name == "Player":
 		is_entered = true
 		#get_tree().reload_current_scene()
+
+
+func _on_body_exited(body):
+	if body.name == "Player":
+		is_entered = false

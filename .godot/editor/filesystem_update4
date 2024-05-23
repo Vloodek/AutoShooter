@@ -10,3 +10,12 @@ res://UI/Scenes/loading_screen.tscn
 res://UI/Scenes/upgrade_screen.tscn
 res://Interactables/scenes/exp.tscn
 res://Interactables/scenes/exit.tscn
+res://Entities/Entities Scripts/enemy_1.gd
+res://Levels/level_generator_scripts/main_room.gd
+res://Interactables/interactables_scripts/exit.gd
+res://Entities/particle.tscn
+res://Entities/break_particle.tscn
+res://UI/ui_scripts/main_menu.gd
+res://UI/Scenes/end_menu.tscn
+res://UI/Scenes/end_menu.gd
+res://Entities/Entities Scripts/player_data.gd
