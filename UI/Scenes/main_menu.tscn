@@ -66,7 +66,7 @@ horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-alignment = 1
+alignment = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -90,3 +90,29 @@ layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_mshun")
 theme_override_font_sizes/font_size = 24
 text = "ВЫХОД"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Seperator2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="start_button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_mshun")
+theme_override_font_sizes/font_size = 24
+text = "ИГРАТЬ"
+
+[node name="exit_button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_mshun")
+theme_override_font_sizes/font_size = 24
+text = "
+"
+flat = true

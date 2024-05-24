@@ -16,7 +16,7 @@ static var default_gun_in_inventory = [0, 0, 0, 0]
 static var is_without_gun_level_tier_2 = true
 static var is_without_gun_level_tier_3 = true
 static var is_without_gun_level_tier_4 = true
-static var default_knockback_strength = 400
+#static var default_knockback_strength = 400
 
 static var enabled_guns = default_enabled_guns
 
@@ -33,12 +33,14 @@ static var default_experience = 0
 static var default_gun_fire_rates: Array = [1.0, 0.1, 1.5, 10.0]  #smaller better
 static var default_gun_bullet_power: Array = [0.8, 0.05, 2.0, 6.0]  #bigger better 
 static var default_gun_bullet_speed: Array = [25.0, 50.0, 40.0, 30.0]  #bigger better
+static var default_gun_bullet_knockback_strength: Array = [400, 100, 1000, 1500] #bigger better
 
 static var gun_textures: Array = ["res://Sprites/turret_01.png", "res://Sprites/turret_02.png", "res://Sprites/turret_03.png", "res://Sprites/turret_04.png"]
 static var gun_fire_rates = default_gun_fire_rates
 static var gun_bullet_power = default_gun_bullet_power
 static var gun_bullet_speed = default_gun_bullet_speed
-static var knockback_strength = default_knockback_strength
+#static var knockback_strength = default_knockback_strength
+static var gun_bullet_knockback_strength = default_gun_bullet_knockback_strength
 
 static var ALL_WEAPON_SLOTS = 4
 static var ALL_CART_TYPES = 8
@@ -69,27 +71,52 @@ static func check_level_up():
 			show_upgrade_screen()
 
 
+#static func get_experience_needed() -> int:
+	##print("level is ", level)
+	#if level == 1:
+		#return 500
+	#elif level >= 2 and level <= 7:
+		#return 500 + (level - 2) * 1000
+	#elif level >= 8 and level <= 20:
+		#if is_without_gun_level_tier_2:
+			#is_without_gun_level_tier_2 = false
+			#upgrade_screen.can_take_next_gun = true
+		#return 5500 + (level - 8) * 1700
+	#elif level >= 21 and level <= 30:
+		#if is_without_gun_level_tier_3:
+			#is_without_gun_level_tier_3 = false
+			#upgrade_screen.can_take_next_gun = true
+		#return 31500 + (level - 21) * 2200
+	#elif level >= 31 and level <= 65:
+		#if is_without_gun_level_tier_4:
+			#is_without_gun_level_tier_4 = false
+			#upgrade_screen.can_take_next_gun = true
+		#return 83200 + (level - 31) * 5000
+	#else:
+		#return 0
+
+
 static func get_experience_needed() -> int:
 	#print("level is ", level)
 	if level == 1:
-		return 500
+		return 100
 	elif level >= 2 and level <= 7:
-		return 500 + (level - 2) * 1000
+		return 100 + (level - 1) * 200
 	elif level >= 8 and level <= 20:
 		if is_without_gun_level_tier_2:
 			is_without_gun_level_tier_2 = false
 			upgrade_screen.can_take_next_gun = true
-		return 5500 + (level - 8) * 1700
+		return 1300 + (level - 7) * 170
 	elif level >= 21 and level <= 30:
 		if is_without_gun_level_tier_3:
 			is_without_gun_level_tier_3 = false
 			upgrade_screen.can_take_next_gun = true
-		return 31500 + (level - 21) * 2200
+		return 3510 + (level - 20) * 220
 	elif level >= 31 and level <= 65:
 		if is_without_gun_level_tier_4:
 			is_without_gun_level_tier_4 = false
 			upgrade_screen.can_take_next_gun = true
-		return 83200 + (level - 31) * 5000
+		return 5710 + (level - 30) * 500
 	else:
 		return 0
 

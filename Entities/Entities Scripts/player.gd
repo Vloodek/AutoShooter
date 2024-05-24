@@ -31,14 +31,19 @@ var time_since_last_call_fire_rate4: float = 0.0
 @onready var fire_rates: Array = [player_data.fire_rate1, player_data.fire_rate2, player_data.fire_rate3, player_data.fire_rate4]
 var enemy_list_at_range: Array
 
+#var tileset_directions: Array = [
+ #TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
+ #TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
+ #TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
+ #TileSet.CELL_NEIGHBOR_LEFT_SIDE,
+ #TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
+ #TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
+ #TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
+ #TileSet.CELL_NEIGHBOR_TOP_SIDE]
 var tileset_directions: Array = [
- TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
- TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
  TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
  TileSet.CELL_NEIGHBOR_LEFT_SIDE,
  TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
- TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
- TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
  TileSet.CELL_NEIGHBOR_TOP_SIDE]
 
 
@@ -47,7 +52,7 @@ func _ready():
 	#fire_timer.wait_time = player_data.fire_rate
 	#fire_timer.start()
 	for i in range(player_data.enabled_guns):
-		print("ready ", gun_sprs, fire_rates)
+		#print("ready ", gun_sprs, fire_rates)
 		gun_sprs[i].texture = load(player_data.gun_textures[player_data.gun_in_inventory[i]])
 		fire_rates[i] = player_data.gun_fire_rates[player_data.gun_in_inventory[i]]
 		guns[i].visible = true
@@ -182,10 +187,12 @@ func instance_bullet(bullet_point, gun, index):
 	bullet.global_position = bullet_point.global_position
 	bullet.speed = player_data.gun_bullet_speed[index]
 	bullet.power = player_data.gun_bullet_power[index]
+	bullet.knockback_strength = player_data.gun_bullet_knockback_strength[index]
 	get_tree().root.add_child(bullet)
 
 
 func reset_states():
+	print("resetting")
 	player_data.health = player_data.default_health
 	player_data.ammo = player_data.default_ammo
 	for fire_rate in fire_rates:
@@ -195,7 +202,8 @@ func reset_states():
 	player_data.experience = player_data.default_experience
 	player_data.level = player_data.default_level
 	player_data.on_floor_level = player_data.default_on_floor_level
-	player_data.knockback_strength = player_data.default_knockback_strength
+	#player_data.knockback_strength = player_data.default_knockback_strength
+	player_data.gun_bullet_knockback_strength = player_data.default_gun_bullet_knockback_strength
 	player_data.gun_fire_rates = player_data.default_gun_fire_rates
 	player_data.gun_bullet_power = player_data.default_gun_bullet_power
 	player_data.gun_bullet_speed = player_data.default_gun_bullet_speed
@@ -242,7 +250,7 @@ func flash():
 
 
 func update_stats(cart_id: int = -1, up_percent: float = 0, target_gun: int = -1):
-	print("update_stats ", gun_sprs, fire_rates)
+	#print("update_stats ", gun_sprs, fire_rates)
 	#$collect_collider.scale = $collect_collider.scale + $collect_collider.scale*0.2
 	#$collect_collider.scale *= 1.2
 	#print('update')
@@ -304,7 +312,7 @@ func _on_break_area_body_entered(body):
 func _on_break_timer_timeout():
 	var collision_position
 	var is_at_least_one_erase = false
-	while walls_to_break.size() > 9:
+	while walls_to_break.size() > 50:
 		walls_to_break[0][2].queue_free()
 		walls_to_break.pop_front()
 	for body in walls_to_check_break:

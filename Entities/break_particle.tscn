@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8fl0gm6k6sge"]
 
-[ext_resource type="Texture2D" uid="uid://dyd7ilgvhf7ja" path="res://Sprites/bullet.png" id="1_gxl4w"]
+[ext_resource type="Texture2D" uid="uid://bb0lv4kapvdy8" path="res://Sprites/broke_wall.png" id="1_q2cru"]
 
 [node name="Sprite2D" type="Sprite2D" groups=["particles"]]
-texture = ExtResource("1_gxl4w")
+z_index = 1
+texture = ExtResource("1_q2cru")

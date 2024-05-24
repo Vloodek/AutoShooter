@@ -134,6 +134,7 @@ libraries = {
 [node name="hitbox_enemy" type="Area2D" parent="." groups=["enemy_1"]]
 visible = false
 position = Vector2(0, -3.125)
+disable_mode = 2
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("3_e34tp")

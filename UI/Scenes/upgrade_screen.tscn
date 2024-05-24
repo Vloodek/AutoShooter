@@ -152,19 +152,26 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-alignment = 0
+text = "Текст"
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="Button2" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-alignment = 0
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="Button3" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-alignment = 0
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

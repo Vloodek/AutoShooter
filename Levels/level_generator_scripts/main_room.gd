@@ -19,6 +19,7 @@ var player
 var exit
 var map
 var level_timeout = 300 # seconds
+var time_to_defeat_boss = 120
 @onready var timer = $Timer
 @onready var times_spawned = level_timeout / timer.wait_time
 var is_boss_spawned = false
@@ -26,16 +27,18 @@ var is_scene_reloading = false
 var map_picks: Array
 
 enum enemy_difficult {easy, middle, hard, boss} 
-var level_number_easy_enemies: Array = [180, 320]
-var level_number_middle_enemies: Array = [20, 80]
-var level_number_hard_enemies: Array = [0, 0]
-var level_difficult_enemies: Array = [1, 2]
+var level_number_easy_enemies: Array = [180, 320, 480]
+var level_number_middle_enemies: Array = [20, 80, 120]
+var level_number_hard_enemies: Array = [0, 0, 20]
+var level_difficult_enemies: Array = [1, 2, 3]
 var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
 var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
-var hp_enemies: Array = [3, 10, 50, 3]
+var hp_enemies: Array = [1, 3, 9, 27]
 var speed_enemies: Array = [20, 60, 50, 70]
-var enemy_damage: Array = [1, 4, 10, 30]
-var level_timeouts: Array = [30, 30, 30]
+var enemy_damage: Array = [1, 3, 9, 12]
+var enemy_xp_drop: Array = [1500, 70, 150, 2000]
+var enemy_xp_color: Array = [Color(1, 1, 1, 1), Color(0.3, 0.8, 0.5, 1), Color(0.2, 0.5, 0.7, 1), Color(0.8, 0.1, 0.9, 1)]
+var level_timeouts: Array = [180, 180, 180]
 var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
 var end_floor = level_timeouts.size() # now it is 0-1-2 (3 floors)
 
@@ -115,11 +118,14 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 		if enemy_difficult_type == enemy_difficult.boss:
 			enemy_position = exit.position
 			enemy = enemy_scene.instantiate()
+			#enemy.HP = hp_enemies[enemy_difficult.boss] * level_difficult_enemies[player_data.on_floor_level]
 			enemy.HP = hp_enemies[enemy_difficult.boss]
 			enemy.speed = speed_enemies[enemy_difficult.boss]
 			enemy.damage = enemy_damage[enemy_difficult.boss]
 			enemy.set_texture(enemy_textures[enemy_difficult.boss])
 			enemy.update_hitbox_scale(boss_scale)
+			enemy.xp_drop = enemy_xp_drop[enemy_difficult.boss]
+			enemy.xp_color = enemy_xp_color[enemy_difficult.boss]
 			enemy.is_it_boss = true
 		else:
 			while !enemy_spawned:
@@ -133,22 +139,31 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 			enemy = enemy_scene.instantiate()
 			match enemy_difficult_type:
 				0:
+					#enemy.HP = hp_enemies[enemy_difficult.easy] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.HP = hp_enemies[enemy_difficult.easy]
 					enemy.speed = speed_enemies[enemy_difficult.easy]
 					enemy.damage = enemy_damage[enemy_difficult.easy]
+					enemy.xp_drop = enemy_xp_drop[enemy_difficult.easy]
+					enemy.xp_color = enemy_xp_color[enemy_difficult.easy]
 					#print(hp_enemies[enemy_difficult.easy], speed_enemies[enemy_difficult.easy])
 					enemy.set_texture(enemy_textures[enemy_difficult.easy])
 				1:
-					enemy.HP = hp_enemies[enemy_difficult.middle]
+					#enemy.HP = hp_enemies[enemy_difficult.middle] * level_difficult_enemies[player_data.on_floor_level]
+					enemy.HP = hp_enemies[enemy_difficult.middle] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.speed = speed_enemies[enemy_difficult.middle]
 					enemy.damage = enemy_damage[enemy_difficult.middle]
+					enemy.xp_drop = enemy_xp_drop[enemy_difficult.middle]
 					enemy.set_texture(enemy_textures[enemy_difficult.middle])
+					enemy.xp_color = enemy_xp_color[enemy_difficult.middle]
 					#print(hp_enemies[enemy_difficult.middle], speed_enemies[enemy_difficult.middle])
 				2:
-					enemy.HP = hp_enemies[enemy_difficult.hard]
+					#enemy.HP = hp_enemies[enemy_difficult.hard] * level_difficult_enemies[player_data.on_floor_level]
+					enemy.HP = hp_enemies[enemy_difficult.hard] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.speed = speed_enemies[enemy_difficult.hard]
 					enemy.damage = enemy_damage[enemy_difficult.hard]
+					enemy.xp_drop = enemy_xp_drop[enemy_difficult.hard]
 					enemy.set_texture(enemy_textures[enemy_difficult.hard])
+					enemy.xp_color = enemy_xp_color[enemy_difficult.hard]
 		enemy.update_damage()
 		enemy.position = enemy_position
 		add_child(enemy)
@@ -186,6 +201,9 @@ func _on_timer_timeout():
 		is_boss_spawned = true
 		instance_enemy(enemy_difficult.boss, player.position, 1)
 		print("spawned")
+	elif number_timeout * timer.wait_time > level_timeout + time_to_defeat_boss:
+		if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
+			instance_enemy(enemy_difficult.hard, player.position, 20)
 	#таймер в игре
 	#get_tree().reload_current_scene()
 
@@ -210,5 +228,6 @@ func reload_game(is_player_dead):
 	for particle in particles:
 		particle.queue_free()
 	if is_player_dead:
+		print("reload game")
 		player.reset_states()
 	get_tree().reload_current_scene()

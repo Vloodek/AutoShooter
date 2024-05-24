@@ -5,11 +5,14 @@ class_name enemy_data
 @onready var fx_scene = preload("res://Entities/Scenes/FX/fx_scene.tscn")
 @onready var exp_scene = preload("res://Interactables/scenes/exp.tscn")
 @onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
+@onready var dead_area = preload("res://Entities/dead_area.tscn")
 enum enemy_direction {RIGHT, LEFT, UP, DOWN, CHASE}
 var new_direction = enemy_direction.RIGHT
 var change_direction
 var HP = 3
 var speed = 20
+var xp_drop = 0
+var xp_color = Color(1, 1, 1, 1)
 var damage = 1
 var is_it_boss = false
 @onready var target = get_node("../Player")
@@ -111,7 +114,7 @@ func _on_hitbox_area_entered(area):
 # Функция для применения отталкивания
 func apply_knockback(bullet):
 	var knockback_direction = (global_position - bullet.global_position).normalized()
-	knockback_velocity = knockback_direction * player_data.knockback_strength
+	knockback_velocity = knockback_direction * bullet.knockback_strength
 	need_to_apply_knockback = true
 
 
@@ -121,9 +124,17 @@ func instance_fx():
 	get_tree().root.add_child(fx)
 
 
+func instance_dead_area():
+	var da = dead_area.instantiate()
+	da.global_position = global_position
+	get_tree().root.add_child(da)
+
+
 func instance_experience():
 	var experience = exp_scene.instantiate()
+	experience.experience = xp_drop
 	experience.global_position = global_position
+	experience.change_color(xp_color)
 	experience.add_to_group("exp_pickup")  # Устанавливаем группу для патрона
 	get_tree().root.call_deferred("add_child", experience)
 
@@ -157,6 +168,8 @@ func _physics_process(_delta : float):
 		need_to_apply_knockback = false
 	animation()
 	move_and_slide()
+	if xp_drop > 70:
+		instance_dead_area()
 	#time_since_last_call += delta
 	#if time_since_last_call > 0.45:
 		#makepath()

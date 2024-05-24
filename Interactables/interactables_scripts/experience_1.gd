@@ -1,11 +1,15 @@
 extends Area2D
 
-var experience = 500
+var experience = 0
 @onready var player = get_tree().get_first_node_in_group("player")
 
 
 func _ready():
 	$anim.play("Active")
+	
+
+func change_color(color):
+	$Sprite2D.modulate = color
 
 
 #func _on_body_entered(body):
