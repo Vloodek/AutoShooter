@@ -33,12 +33,12 @@ var level_number_hard_enemies: Array = [0, 0, 20]
 var level_difficult_enemies: Array = [1, 2, 3]
 var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
 var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
-var hp_enemies: Array = [1, 3, 9, 27]
+var hp_enemies: Array = [1, 3, 9, 54]
 var speed_enemies: Array = [20, 60, 50, 70]
 var enemy_damage: Array = [1, 3, 6, 9]
-var enemy_xp_drop: Array = [1500, 70, 150, 2000]
+var enemy_xp_drop: Array = [1500, 70, 150, 1000]
 var enemy_xp_color: Array = [Color(1, 1, 1, 1), Color(0.3, 0.8, 0.5, 1), Color(0.2, 0.5, 0.7, 1), Color(0.8, 0.1, 0.9, 1)]
-var level_timeouts: Array = [30, 180, 180]
+var level_timeouts: Array = [180, 180, 180]
 var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
 var end_floor = level_timeouts.size() # now it is 0-1-2 (3 floors)
 

@@ -1,47 +1,47 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1716607664
+::res://::1716612562
 Globals.gd::GDScript::-1::1715921486::0::1::::<>Node<>::
 icon.svg::CompressedTexture2D::1311239764282031588::1715921486::1715921486::1::::<><>::
-main_level.tscn::PackedScene::6056800896633225337::1716607728::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://4caganixe3qx::::res://UI/Scenes/upgrade_screen.tscn<>uid://bje2ewbg4hoqo::::res://Sprites/walls.png
-::res://Entities/::1716607665
-break_particle.tscn::PackedScene::4713687279387376912::1716607729::0::1::::<><>::uid://bb0lv4kapvdy8::::res://Sprites/broke_wall.png
-dead_area.tscn::PackedScene::1375879658986154502::1716607665::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
-particle.tscn::PackedScene::5890411037280041294::1716607729::0::1::::<><>::
-::res://Entities/Entities Scripts/::1716607507
+main_level.tscn::PackedScene::6056800896633225337::1716611645::0::1::::<><>::res://Levels/level_generator_scripts/main_room.gd<>res://UI/ui_scripts/GUI.gd<>uid://di30pfh8x3emn::::res://Sprites/HeartSpriteSheet.png<>uid://4caganixe3qx::::res://UI/Scenes/upgrade_screen.tscn<>uid://bje2ewbg4hoqo::::res://Sprites/walls.png
+::res://Entities/::1716611646
+break_particle.tscn::PackedScene::4713687279387376912::1716611646::0::1::::<><>::uid://bb0lv4kapvdy8::::res://Sprites/broke_wall.png
+dead_area.tscn::PackedScene::1375879658986154502::1716611646::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
+particle.tscn::PackedScene::5890411037280041294::1716611646::0::1::::<><>::
+::res://Entities/Entities Scripts/::1716611637
 bullet_1.gd::GDScript::-1::1716531214::0::1::::<>Area2D<>::
 camera.gd::GDScript::-1::1716030397::0::1::::<>Camera2D<>::
 enemy_1.gd::GDScript::-1::1716549739::0::1::::enemy_data<>CharacterBody2D<>::
 fx_scene.gd::GDScript::-1::1716027733::0::1::::<>Node2D<>::
-player.gd::GDScript::-1::1716607498::0::1::::<>CharacterBody2D<>::
-player_data.gd::GDScript::-1::1716607507::0::1::::player_data<>Node<>::
+player.gd::GDScript::-1::1716611631::0::1::::<>CharacterBody2D<>::
+player_data.gd::GDScript::-1::1716611637::0::1::::player_data<>Node<>::
 scent_trail.gd::GDScript::-1::1716027733::0::1::::<>Area2D<>::
 ::res://Entities/Scenes/::1715921486
-::res://Entities/Scenes/Bullets/::1716607664
-bullet_1.tscn::PackedScene::5027328062542402874::1716607729::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
-::res://Entities/Scenes/Enemies/::1716607664
-enemy_1.tscn::PackedScene::3864483721827169810::1716607729::0::1::::<><>::res://Entities/Entities Scripts/enemy_1.gd<>uid://3pfkqdnr7r6h::::res://Sprites/MedZ_Animation.png<>res://Entities/Scenes/Enemies/hitbox_enemy.gd
+::res://Entities/Scenes/Bullets/::1716611645
+bullet_1.tscn::PackedScene::5027328062542402874::1716611645::0::1::::<><>::uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png<>res://Entities/Entities Scripts/bullet_1.gd
+::res://Entities/Scenes/Enemies/::1716611645
+enemy_1.tscn::PackedScene::3864483721827169810::1716611645::0::1::::<><>::res://Entities/Entities Scripts/enemy_1.gd<>uid://3pfkqdnr7r6h::::res://Sprites/MedZ_Animation.png<>res://Entities/Scenes/Enemies/hitbox_enemy.gd
 hitbox_enemy.gd::GDScript::-1::1716363529::0::1::::hitbox_enemy<>Area2D<>::
-::res://Entities/Scenes/FX/::1716607665
-fx_scene.tscn::PackedScene::2505380075330507237::1716607665::0::1::::<><>::res://Entities/Entities Scripts/fx_scene.gd<>uid://b15h24rkxmcv1::::res://Sprites/dead_fx.png
+::res://Entities/Scenes/FX/::1716611646
+fx_scene.tscn::PackedScene::2505380075330507237::1716611646::0::1::::<><>::res://Entities/Entities Scripts/fx_scene.gd<>uid://b15h24rkxmcv1::::res://Sprites/dead_fx.png
 scent_trail.tscn::PackedScene::8092665436404020458::1716216249::0::1::::<><>::res://Entities/Entities Scripts/scent_trail.gd
-::res://Entities/Scenes/Player/::1716607664
-player.tscn::PackedScene::2918615905173748260::1716607729::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>res://Shaders/hurt.gdshader<>uid://c7ab6eg0ar1x7::::res://Sprites/Untitled_05-20-2024_12-14-27.png<>res://Entities/Entities Scripts/camera.gd<>uid://sdpb65esecew::::res://Sprites/turret_01.png
+::res://Entities/Scenes/Player/::1716611844
+player.tscn::PackedScene::2918615905173748260::1716611844::0::1::::<><>::res://Entities/Entities Scripts/player.gd<>res://Shaders/hurt.gdshader<>uid://c7ab6eg0ar1x7::::res://Sprites/Untitled_05-20-2024_12-14-27.png<>res://Entities/Entities Scripts/camera.gd<>uid://sdpb65esecew::::res://Sprites/turret_01.png
 ::res://Interactables/::1715921486
 ::res://Interactables/interactables_scripts/::1716607543
 dead_area.gd::GDScript::-1::1716607543::0::1::::<>Area2D<>::
 exit.gd::GDScript::-1::1716459163::0::1::::<>Area2D<>::
 experience_1.gd::GDScript::-1::1716541863::0::1::::<>Area2D<>::
-::res://Interactables/scenes/::1716607664
+::res://Interactables/scenes/::1716611646
 dead_area.tscn::PackedScene::6831415810517779332::1715921486::0::1::::<><>::res://Interactables/interactables_scripts/dead_area.gd
-exit.tscn::PackedScene::4436147769587728158::1716607729::0::1::::<><>::res://Interactables/interactables_scripts/exit.gd<>uid://bpgcs2ilouwpp::::res://Sprites/exit_portal.png
-exp.tscn::PackedScene::85950462541176311::1716607729::0::1::::<><>::res://Interactables/interactables_scripts/experience_1.gd<>uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png
+exit.tscn::PackedScene::4436147769587728158::1716611646::0::1::::<><>::res://Interactables/interactables_scripts/exit.gd<>uid://bpgcs2ilouwpp::::res://Sprites/exit_portal.png
+exp.tscn::PackedScene::85950462541176311::1716611646::0::1::::<><>::res://Interactables/interactables_scripts/experience_1.gd<>uid://dyd7ilgvhf7ja::::res://Sprites/bullet.png
 ::res://Levels/::1715921486
 ::res://Levels/level_generator_scripts/::1716605286
 main_room.gd::GDScript::-1::1716605286::0::1::::MainLevel<>Node2D<>::
 walker.gd::GDScript::-1::1716370832::0::1::::Walker_room<>Node<>::
-::res://Shaders/::1716607665
-hurt.gdshader::Shader::-1::1716607729::0::1::::<><>::
-::res://Sprites/::1716607663
+::res://Shaders/::1716611916
+hurt.gdshader::Shader::-1::1716611916::0::1::::<><>::
+::res://Sprites/::1716607729
 ammo.png::CompressedTexture2D::8052767540803018769::1715921486::1715921486::1::::<><>::
 broke_wall.png::CompressedTexture2D::2508925898421134837::1716546694::1716546694::1::::<><>::
 bullet.png::CompressedTexture2D::8851945249763435882::1715921486::1715921486::1::::<><>::
@@ -68,16 +68,16 @@ walls.png::CompressedTexture2D::3028025446802111470::1716545640::1716545640::1::
 ::res://Sprites/UI/::1715921486
 menu_back.jpg::CompressedTexture2D::2217354794598279946::1715921486::1715921486::1::::<><>::
 ::res://UI/::1715921486
-::res://UI/Scenes/::1716607665
-end_menu.gd::GDScript::-1::1716467491::0::1::::EndMenu<>Control<>::
-end_menu.tscn::PackedScene::7833111125278413971::1716607729::0::1::::<><>::res://UI/Scenes/end_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
-loading_screen.tscn::PackedScene::8117345642244204040::1716607729::0::1::::<><>::res://UI/ui_scripts/Loading Screen.gd
-main_menu.tscn::PackedScene::5674350469317409851::1716607729::0::1::::<><>::res://UI/ui_scripts/main_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
-upgrade_screen.gdshader::Shader::-1::1716607729::0::1::::<><>::
-upgrade_screen.tscn::PackedScene::2039615956251354743::1716607729::0::1::::<><>::res://UI/ui_scripts/upgrade_screen.gd<>res://UI/Scenes/upgrade_screen.gdshader
+::res://UI/Scenes/::1716611916
+end_menu.gd::GDScript::-1::1716611887::0::1::::EndMenu<>Control<>::
+end_menu.tscn::PackedScene::7833111125278413971::1716611914::0::1::::<><>::res://UI/Scenes/end_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
+loading_screen.tscn::PackedScene::8117345642244204040::1716611646::0::1::::<><>::res://UI/ui_scripts/Loading Screen.gd
+main_menu.tscn::PackedScene::5674350469317409851::1716611645::0::1::::<><>::res://UI/ui_scripts/main_menu.gd<>uid://6udrk8xe0g7k::::res://Sprites/UI/menu_back.jpg
+upgrade_screen.gdshader::Shader::-1::1716611916::0::1::::<><>::
+upgrade_screen.tscn::PackedScene::2039615956251354743::1716611646::0::1::::<><>::res://UI/ui_scripts/upgrade_screen.gd<>res://UI/Scenes/upgrade_screen.gdshader
 walls.png::CompressedTexture2D::745026720397557428::1716545548::1716545548::1::::<><>::
-::res://UI/ui_scripts/::1716607423
-GUI.gd::GDScript::-1::1716607423::0::1::::<>CanvasLayer<>::
+::res://UI/ui_scripts/::1716611645
+GUI.gd::GDScript::-1::1716609661::0::1::::<>CanvasLayer<>::
 Loading Screen.gd::GDScript::-1::1716026300::0::1::::<>Control<>::
 main_menu.gd::GDScript::-1::1716600193::0::1::::MainMenu<>Control<>::
-upgrade_screen.gd::GDScript::-1::1716607179::0::1::::<>Control<>::
+upgrade_screen.gd::GDScript::-1::1716611645::0::1::::<>Control<>::

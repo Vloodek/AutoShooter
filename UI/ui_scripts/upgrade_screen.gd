@@ -6,6 +6,7 @@ var player
 @onready var procent_in_cart_slots: Array = [-1, -1, -1]
 @onready var target_gun_in_cart_slots: Array = [-1, -1, -1]
 @onready var carts: Array = [$PanelContainer/HBoxContainer/Button1, $PanelContainer/HBoxContainer/Button2, $PanelContainer/HBoxContainer/Button3]
+@onready var color_rects: Array = [$PanelContainer/HBoxContainer/Button1/ColorRect, $PanelContainer/HBoxContainer/Button2/ColorRect, $PanelContainer/HBoxContainer/Button3/ColorRect]
 var is_showing = false
 var can_take_next_gun = false
 var int_to_str: Array = ["first", "second", "third", "forth"]
@@ -40,7 +41,7 @@ func generate_carts():
 					carts_id_in_cart_slots[i] = cart_id
 					is_not_valid = false
 			carts[i].icon = load(player_data.gun_textures[carts_id_in_cart_slots[i]])
-			
+			color_rects[i].color = Color(1, 1, 1, 0)
 		else:
 			while is_not_valid:
 				cart_id = randi() % (player_data.ALL_CART_TYPES-4) + 4
@@ -54,21 +55,27 @@ func generate_carts():
 		var card_level = randi() % 100 + 1
 		if card_level < 61:
 			procent_in_cart_slots[i] = randi() % 3 + 1
-			carts[i].modulate = Color(0, 1, 0, 1)
+			#carts[i].self_modulate = Color(0, 1, 0, 1)
+			#carts[i].icon = load(player_data.gun_textures[0])
+			color_rects[i].color = Color(0, 1, 0, 1)
+			#carts[i].icon.modulate = Color(1, 1, 1, 1)
 		elif card_level < 86:
 			procent_in_cart_slots[i] = randi() % 5 + 3
-			carts[i].modulate = Color(0, 0, 1, 1)
+			color_rects[i].color = Color(0, 0, 1, 1)
+			#carts[i].self_modulate = Color(0, 0, 1, 1)
 		elif card_level < 96:
 			procent_in_cart_slots[i] = randi() % 7 + 5
-			carts[i].modulate = Color(1, 0, 0, 1)
+			#carts[i].self_modulate = Color(1, 0, 0, 1)
+			color_rects[i].color = Color(1, 0, 0, 1)
 		else:
 			procent_in_cart_slots[i] = randi() % 10 + 7
-			carts[i].modulate = Color(1, 0, 1, 1)
+			#carts[i].self_modulate = Color(1, 0, 1, 1)
+			color_rects[i].color = Color(1, 0, 1, 1)
 		print(carts_id_in_cart_slots[i], " cart ", procent_in_cart_slots[i], " percent ", target_gun_in_cart_slots[i], " target_gun")
 		if target_gun_in_cart_slots[i] != -1:
 			carts[i].text = str(procent_in_cart_slots[i]) + " percent on " + int_to_str[target_gun_in_cart_slots[i]] + " gun"
 		else:
-			carts[i].modulate = Color(1, 1, 1, 1)
+			#color_rects[i].color = Color(1, 1, 1, 0)
 			carts[i].text = str(procent_in_cart_slots[i]) + " percent"
 
 

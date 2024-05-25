@@ -37,8 +37,8 @@ static var collector_range_scale = default_collector_range_scale
 static var shoot_range_scale = default_shoot_range_scale
 static var min_distance_to_shoot: int = default_min_distance_to_shoot
 static var default_experience = 0
-static var default_gun_fire_rates: Array = [1.0, 0.1, 1.5, 10.0]  #smaller better
-static var default_gun_bullet_power: Array = [0.8, 0.05, 2.0, 6.0]  #bigger better 
+static var default_gun_fire_rates: Array = [1.0, 0.3, 1.5, 6.0]  #smaller better
+static var default_gun_bullet_power: Array = [0.8, 0.05, 2.0, 20.0]  #bigger better 
 static var default_gun_bullet_speed: Array = [25.0, 50.0, 40.0, 30.0]  #bigger better
 static var default_gun_bullet_knockback_strength: Array = [400, 100, 1000, 1500] #bigger better
 
@@ -113,17 +113,17 @@ static func get_experience_needed() -> int:
 		if is_without_gun_level_tier_2:
 			is_without_gun_level_tier_2 = false
 			upgrade_screen.can_take_next_gun = true
-		return 1300 + (level - 7) * 170
+		return 1300 + (level - 7) * 400
 	elif level >= 21 and level <= 30:
 		if is_without_gun_level_tier_3:
 			is_without_gun_level_tier_3 = false
 			upgrade_screen.can_take_next_gun = true
-		return 3510 + (level - 20) * 220
+		return 6500 + (level - 20) * 800
 	elif level >= 31 and level <= 65:
 		if is_without_gun_level_tier_4:
 			is_without_gun_level_tier_4 = false
 			upgrade_screen.can_take_next_gun = true
-		return 5710 + (level - 30) * 500
+		return 14500 + (level - 30) * 1600
 	else:
 		return 0
 

@@ -1,5 +1,6 @@
-Timer
 ColorRect
+Label
+Timer
 Sprite2D
 GPUParticles2D
 CPUParticles2D
@@ -11,4 +12,3 @@ AnimationPlayer
 CheckBox
 HBoxContainer
 PanelContainer
-ItemList

@@ -61,7 +61,7 @@ theme_override_constants/shadow_offset_y = 8
 theme_override_constants/outline_size = 20
 theme_override_fonts/font = SubResource("SystemFont_vta8a")
 theme_override_font_sizes/font_size = 64
-text = "МУЖИЦКАЯ ИГРА"
+text = "ZOMBIE LABORATORY SURVIVORS"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
@@ -82,14 +82,14 @@ custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_mshun")
 theme_override_font_sizes/font_size = 24
-text = "ИГРАТЬ"
+text = "PLAY"
 
 [node name="exit_button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_mshun")
 theme_override_font_sizes/font_size = 24
-text = "ВЫХОД"
+text = "EXIT"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2

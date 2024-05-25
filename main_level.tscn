@@ -335,6 +335,17 @@ offset_bottom = 107.0
 theme_override_font_sizes/font_size = 32
 text = "XP:"
 
+[node name="YOU_ARE_DEAD" type="Label" parent="GUI"]
+visible = false
+offset_left = 262.0
+offset_top = 264.0
+offset_right = 883.0
+offset_bottom = 357.0
+theme_override_font_sizes/font_size = 32
+text = "YOU ARE DEAD!
+PRESS ENTER OR SPACE TO START AGAIN"
+horizontal_alignment = 1
+
 [node name="xp_amount" type="Label" parent="GUI"]
 offset_left = 92.0
 offset_top = 62.0

@@ -105,6 +105,7 @@ func die():
 	await get_tree().create_timer(2).timeout
 	$anim.pause()
 	$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
+	get_node("../GUI/YOU_ARE_DEAD").visible = true
 	#reload_game()
 
 
@@ -304,13 +305,14 @@ func update_stats(cart_id: int = -1, up_percent: float = 0, target_gun: int = -1
 			$break_timer.wait_time = player_data.break_timer
 			print($break_timer.wait_time)
 
+
 #func _on_collect_area_area_entered(_area):
 	#print('da')
 	#update_stats()
 
 
 func _on_shoot_range_area_body_entered(body):
-	if enemy_list_at_range.size() < 10:
+	if enemy_list_at_range.size() < 100:
 		enemy_list_at_range.append(body)
 		for enemy in enemy_list_at_range:
 			if enemy == null:
