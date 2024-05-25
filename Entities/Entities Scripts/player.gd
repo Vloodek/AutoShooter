@@ -9,6 +9,7 @@ var walls_to_break: Array = []
 @onready var trail_scene = preload("res://Entities/Scenes/FX/scent_trail.tscn")
 @onready var particle_scene = preload("res://Entities/particle.tscn")
 @onready var break_particle_scene = preload("res://Entities/break_particle.tscn")
+@onready var heart = get_node("../GUI/heart")
 @export var speed: int
 var input_movement = Vector2()
 @onready var ray_cast = $RayCast2D
@@ -48,7 +49,10 @@ var tileset_directions: Array = [
 
 
 func _ready():
+	$regeneration_hp_timer.wait_time = player_data.regeration_timer
+	$break_timer.wait_time = player_data.break_timer
 	$collect_area.scale = Vector2(player_data.collector_range_scale, player_data.collector_range_scale)
+	$shoot_range_area.scale = Vector2(player_data.shoot_range_scale, player_data.shoot_range_scale)
 	#fire_timer.wait_time = player_data.fire_rate
 	#fire_timer.start()
 	for i in range(player_data.enabled_guns):
@@ -193,8 +197,12 @@ func instance_bullet(bullet_point, gun, index):
 
 func reset_states():
 	print("resetting")
-	player_data.health = player_data.default_health
+	player_data.regeration_timer = player_data.default_regeneration_timer
+	player_data.break_timer = player_data.default_break_timer
+	player_data.health = player_data.default_max_health
+	player_data.max_health = player_data.default_max_health
 	player_data.ammo = player_data.default_ammo
+	player_data.shoot_range_scale = player_data.default_shoot_range_scale
 	for fire_rate in fire_rates:
 		fire_rate = player_data.default_fire_rate
 	player_data.min_distance_to_shoot = player_data.default_min_distance_to_shoot
@@ -275,6 +283,26 @@ func update_stats(cart_id: int = -1, up_percent: float = 0, target_gun: int = -1
 			player_data.gun_bullet_power[player_data.gun_in_inventory[target_gun]] *= (1 + up_percent / 100)
 		7:
 			player_data.gun_bullet_speed[player_data.gun_in_inventory[target_gun]] *= (1 + up_percent / 100)
+		8:
+			player_data.shoot_range_scale *= (1 + up_percent / 100)
+			$shoot_range_area.scale = Vector2(player_data.shoot_range_scale, player_data.shoot_range_scale)
+		9:
+			var prev = player_data.max_health
+			player_data.max_health *= (1 + up_percent / 100)
+			var diff = int(player_data.max_health - prev)
+			for i in range(diff):
+				var new_heart = Sprite2D.new()
+				new_heart.texture = heart.texture
+				new_heart.hframes = heart.hframes
+				heart.add_child(new_heart)
+		10:
+			player_data.regeration_timer *= (1 - up_percent / 100)
+			$regeneration_hp_timer.wait_time = player_data.regeration_timer
+			print($regeneration_hp_timer.wait_time)
+		11:
+			player_data.break_timer *= (1 - up_percent / 100)
+			$break_timer.wait_time = player_data.break_timer
+			print($break_timer.wait_time)
 
 #func _on_collect_area_area_entered(_area):
 	#print('da')
@@ -343,3 +371,9 @@ func _on_break_timer_timeout():
 func _on_break_area_body_exited(body):
 	if body is TileMap:
 		walls_to_check_break.erase(body)
+
+
+func _on_regeneration_hp_timer_timeout():
+	if player_data.health < player_data.max_health:
+		player_data.health += 1
+	

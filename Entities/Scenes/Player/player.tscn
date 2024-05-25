@@ -179,7 +179,7 @@ radius = 3.72787
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g51li"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flv02"]
-radius = 100.0
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nfgrh"]
 radius = 17.2414
@@ -288,7 +288,6 @@ collision_mask = 40
 hit_from_inside = true
 
 [node name="shoot_range_area" type="Area2D" parent="."]
-visible = false
 collision_mask = 32
 
 [node name="shoot_range_collider" type="CollisionShape2D" parent="shoot_range_area"]
@@ -305,6 +304,10 @@ shape = SubResource("CircleShape2D_nfgrh")
 
 [node name="break_timer" type="Timer" parent="."]
 
+[node name="regeneration_hp_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="area_entered" from="collect_area" to="." method="_on_collect_area_area_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
@@ -315,3 +318,4 @@ shape = SubResource("CircleShape2D_nfgrh")
 [connection signal="body_entered" from="break_area" to="." method="_on_break_area_body_entered"]
 [connection signal="body_exited" from="break_area" to="." method="_on_break_area_body_exited"]
 [connection signal="timeout" from="break_timer" to="." method="_on_break_timer_timeout"]
+[connection signal="timeout" from="regeneration_hp_timer" to="." method="_on_regeneration_hp_timer_timeout"]

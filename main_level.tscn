@@ -322,20 +322,20 @@ script = ExtResource("3_idno8")
 texture_filter = 1
 
 [node name="heart" type="Sprite2D" parent="GUI"]
-position = Vector2(48, 32)
-scale = Vector2(2, 2)
+position = Vector2(32, 32)
+scale = Vector2(0.3, 0.5)
 texture = ExtResource("3_kf2lp")
 hframes = 5
 
 [node name="ammo" type="Label" parent="GUI"]
 offset_left = 32.0
-offset_top = 61.0
+offset_top = 62.0
 offset_right = 85.0
-offset_bottom = 106.0
+offset_bottom = 107.0
 theme_override_font_sizes/font_size = 32
 text = "XP:"
 
-[node name="ammo_amount" type="Label" parent="GUI"]
+[node name="xp_amount" type="Label" parent="GUI"]
 offset_left = 92.0
 offset_top = 62.0
 offset_right = 132.0
@@ -344,19 +344,35 @@ theme_override_font_sizes/font_size = 32
 text = "0"
 
 [node name="timer_countdown" type="Label" parent="GUI"]
-offset_left = 347.0
-offset_top = 112.0
-offset_right = 491.0
-offset_bottom = 157.0
+offset_left = 193.0
+offset_top = 160.0
+offset_right = 337.0
+offset_bottom = 205.0
 theme_override_font_sizes/font_size = 32
 
 [node name="time_left" type="Label" parent="GUI"]
 offset_left = 32.0
-offset_top = 112.0
-offset_right = 330.0
-offset_bottom = 157.0
+offset_top = 160.0
+offset_right = 188.0
+offset_bottom = 205.0
 theme_override_font_sizes/font_size = 32
-text = "Времени осталось: "
+text = "Time left: "
+
+[node name="goal" type="Label" parent="GUI"]
+offset_left = 32.0
+offset_top = 111.0
+offset_right = 120.0
+offset_bottom = 156.0
+theme_override_font_sizes/font_size = 32
+text = "Goal: "
+
+[node name="goal_mission" type="Label" parent="GUI"]
+offset_left = 123.0
+offset_top = 111.0
+offset_right = 236.0
+offset_bottom = 156.0
+theme_override_font_sizes/font_size = 32
+text = "Survive"
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = 1
@@ -385,6 +401,9 @@ wait_time = 15.0
 autostart = true
 
 [node name="TimerCheckReload" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerLevel" type="Timer" parent="."]
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

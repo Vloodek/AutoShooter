@@ -9,6 +9,8 @@ var player
 var is_showing = false
 var can_take_next_gun = false
 var int_to_str: Array = ["first", "second", "third", "forth"]
+var attributes_textures: Array = ["", "", "", ""]
+var commom_attributes = [4, 8, 9, 10, 11]
 
 
 func _ready():
@@ -42,8 +44,9 @@ func generate_carts():
 		else:
 			while is_not_valid:
 				cart_id = randi() % (player_data.ALL_CART_TYPES-4) + 4
-				target_gun_in_cart_slots[i] = randi() % player_data.enabled_guns
 				if cart_id not in carts_id_in_cart_slots:
+					if cart_id not in commom_attributes:
+						target_gun_in_cart_slots[i] = randi() % player_data.enabled_guns
 					carts_id_in_cart_slots[i] = cart_id
 					is_not_valid = false
 			##carts[i].icon = load()
@@ -51,16 +54,21 @@ func generate_carts():
 		var card_level = randi() % 100 + 1
 		if card_level < 61:
 			procent_in_cart_slots[i] = randi() % 3 + 1
+			carts[i].modulate = Color(0, 1, 0, 1)
 		elif card_level < 86:
 			procent_in_cart_slots[i] = randi() % 5 + 3
+			carts[i].modulate = Color(0, 0, 1, 1)
 		elif card_level < 96:
 			procent_in_cart_slots[i] = randi() % 7 + 5
+			carts[i].modulate = Color(1, 0, 0, 1)
 		else:
 			procent_in_cart_slots[i] = randi() % 10 + 7
+			carts[i].modulate = Color(1, 0, 1, 1)
 		print(carts_id_in_cart_slots[i], " cart ", procent_in_cart_slots[i], " percent ", target_gun_in_cart_slots[i], " target_gun")
 		if target_gun_in_cart_slots[i] != -1:
 			carts[i].text = str(procent_in_cart_slots[i]) + " percent on " + int_to_str[target_gun_in_cart_slots[i]] + " gun"
 		else:
+			carts[i].modulate = Color(1, 1, 1, 1)
 			carts[i].text = str(procent_in_cart_slots[i]) + " percent"
 
 

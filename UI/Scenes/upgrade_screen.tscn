@@ -106,7 +106,6 @@ focus_mode = 2
 script = ExtResource("1_2c5dt")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_08k0c")
 layout_mode = 1
 anchors_preset = 15
@@ -152,7 +151,6 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
-text = "Текст"
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true

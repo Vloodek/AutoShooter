@@ -5,11 +5,11 @@ class_name player_data
 # Статическое свойство для ссылки на экран прокачки
 static var upgrade_screen: Node
 
-static var default_health = 100
 static var default_ammo = 1000000000
 static var default_fire_rate: float = 1.0
 static var default_speed = 100
 static var default_collector_range_scale: float = 1.0
+static var default_shoot_range_scale: float = 100
 static var default_min_distance_to_shoot: int = 100
 static var default_enabled_guns = 1
 static var default_gun_in_inventory = [0, 0, 0, 0]
@@ -20,7 +20,13 @@ static var is_without_gun_level_tier_4 = true
 
 static var enabled_guns = default_enabled_guns
 
-static var health = default_health
+static var default_max_health = 100
+static var max_health = default_max_health
+static var health = max_health
+static var default_regeneration_timer: float = 10 #seconds
+static var regeration_timer = default_regeneration_timer
+static var default_break_timer: float = 1 #seconds
+static var break_timer = default_break_timer
 static var ammo = default_ammo
 static var fire_rate1: float = default_fire_rate
 static var fire_rate2: float = default_fire_rate
@@ -28,6 +34,7 @@ static var fire_rate3: float = default_fire_rate
 static var fire_rate4: float = default_fire_rate
 static var speed = default_speed
 static var collector_range_scale = default_collector_range_scale
+static var shoot_range_scale = default_shoot_range_scale
 static var min_distance_to_shoot: int = default_min_distance_to_shoot
 static var default_experience = 0
 static var default_gun_fire_rates: Array = [1.0, 0.1, 1.5, 10.0]  #smaller better
@@ -43,7 +50,7 @@ static var gun_bullet_speed = default_gun_bullet_speed
 static var gun_bullet_knockback_strength = default_gun_bullet_knockback_strength
 
 static var ALL_WEAPON_SLOTS = 4
-static var ALL_CART_TYPES = 8
+static var ALL_CART_TYPES = 12
 static var experience = default_experience
 static var default_level = 1
 static var level = default_level

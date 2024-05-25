@@ -12,6 +12,7 @@ class_name MainLevel
 var enemy_textures: Array = ["res://Sprites/MedZ_Animation.png", "res://Sprites/MedZ_Animation_02.png", "res://Sprites/WagnerZ_Animation_01.png", "res://Sprites/WagnerZ_Animation_01.png"]
 #var enemy_counter = 0
 var number_timeout = 0
+var is_boss_spawned = false
 var number_enemy_at_group = 30
 var max_number_enemy = 300
 var boss_scale = 4
@@ -22,7 +23,6 @@ var level_timeout = 300 # seconds
 var time_to_defeat_boss = 120
 @onready var timer = $Timer
 @onready var times_spawned = level_timeout / timer.wait_time
-var is_boss_spawned = false
 var is_scene_reloading = false
 var map_picks: Array
 
@@ -35,16 +35,17 @@ var current_level_groups_participants_to_spawn: Array = [-1, -1, -1]
 var levels_numbers_enemies: Array  = [level_number_easy_enemies, level_number_middle_enemies, level_number_hard_enemies]
 var hp_enemies: Array = [1, 3, 9, 27]
 var speed_enemies: Array = [20, 60, 50, 70]
-var enemy_damage: Array = [1, 3, 9, 12]
+var enemy_damage: Array = [1, 3, 6, 9]
 var enemy_xp_drop: Array = [1500, 70, 150, 2000]
 var enemy_xp_color: Array = [Color(1, 1, 1, 1), Color(0.3, 0.8, 0.5, 1), Color(0.2, 0.5, 0.7, 1), Color(0.8, 0.1, 0.9, 1)]
-var level_timeouts: Array = [180, 180, 180]
+var level_timeouts: Array = [30, 180, 180]
 var player_detection_radius = 200 # Условный радиус обнаружения игрока для врагов
 var end_floor = level_timeouts.size() # now it is 0-1-2 (3 floors)
 
 
 func _ready():
 	#randomize()
+	$TimerLevel.wait_time = level_timeouts[player_data.on_floor_level]
 	var start_number_enemy = 10
 	#print(player_data.on_floor_level)
 	level_timeout = level_timeouts[player_data.on_floor_level]
@@ -118,8 +119,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 		if enemy_difficult_type == enemy_difficult.boss:
 			enemy_position = exit.position
 			enemy = enemy_scene.instantiate()
-			#enemy.HP = hp_enemies[enemy_difficult.boss] * level_difficult_enemies[player_data.on_floor_level]
-			enemy.HP = hp_enemies[enemy_difficult.boss]
+			enemy.HP = hp_enemies[enemy_difficult.boss] * level_difficult_enemies[player_data.on_floor_level]
+			#enemy.HP = hp_enemies[enemy_difficult.boss]
 			enemy.speed = speed_enemies[enemy_difficult.boss]
 			enemy.damage = enemy_damage[enemy_difficult.boss]
 			enemy.set_texture(enemy_textures[enemy_difficult.boss])
@@ -139,8 +140,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 			enemy = enemy_scene.instantiate()
 			match enemy_difficult_type:
 				0:
-					#enemy.HP = hp_enemies[enemy_difficult.easy] * level_difficult_enemies[player_data.on_floor_level]
-					enemy.HP = hp_enemies[enemy_difficult.easy]
+					enemy.HP = hp_enemies[enemy_difficult.easy] * level_difficult_enemies[player_data.on_floor_level]
+					#enemy.HP = hp_enemies[enemy_difficult.easy]
 					enemy.speed = speed_enemies[enemy_difficult.easy]
 					enemy.damage = enemy_damage[enemy_difficult.easy]
 					enemy.xp_drop = enemy_xp_drop[enemy_difficult.easy]
@@ -148,8 +149,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 					#print(hp_enemies[enemy_difficult.easy], speed_enemies[enemy_difficult.easy])
 					enemy.set_texture(enemy_textures[enemy_difficult.easy])
 				1:
-					#enemy.HP = hp_enemies[enemy_difficult.middle] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.HP = hp_enemies[enemy_difficult.middle] * level_difficult_enemies[player_data.on_floor_level]
+					#enemy.HP = hp_enemies[enemy_difficult.middle] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.speed = speed_enemies[enemy_difficult.middle]
 					enemy.damage = enemy_damage[enemy_difficult.middle]
 					enemy.xp_drop = enemy_xp_drop[enemy_difficult.middle]
@@ -157,8 +158,8 @@ func instance_enemy(enemy_difficult_type, player_pos, number_enemy):
 					enemy.xp_color = enemy_xp_color[enemy_difficult.middle]
 					#print(hp_enemies[enemy_difficult.middle], speed_enemies[enemy_difficult.middle])
 				2:
-					#enemy.HP = hp_enemies[enemy_difficult.hard] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.HP = hp_enemies[enemy_difficult.hard] * level_difficult_enemies[player_data.on_floor_level]
+					#enemy.HP = hp_enemies[enemy_difficult.hard] * level_difficult_enemies[player_data.on_floor_level]
 					enemy.speed = speed_enemies[enemy_difficult.hard]
 					enemy.damage = enemy_damage[enemy_difficult.hard]
 					enemy.xp_drop = enemy_xp_drop[enemy_difficult.hard]
@@ -200,10 +201,15 @@ func _on_timer_timeout():
 	if number_timeout * timer.wait_time > level_timeout && !is_boss_spawned:
 		is_boss_spawned = true
 		instance_enemy(enemy_difficult.boss, player.position, 1)
+		$TimerLevel.wait_time = time_to_defeat_boss
+		$TimerLevel.stop()
+		$TimerLevel.start()
 		print("spawned")
+		$GUI/goal_mission.text = "Kill the boss and find the exit!"
 	elif number_timeout * timer.wait_time > level_timeout + time_to_defeat_boss:
 		if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
 			instance_enemy(enemy_difficult.hard, player.position, 20)
+			level_difficult_enemies[player_data.on_floor_level] += 1
 	#таймер в игре
 	#get_tree().reload_current_scene()
 
