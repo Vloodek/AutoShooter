@@ -7,11 +7,25 @@ var player
 @onready var target_gun_in_cart_slots: Array = [-1, -1, -1]
 @onready var carts: Array = [$PanelContainer/HBoxContainer/Button1, $PanelContainer/HBoxContainer/Button2, $PanelContainer/HBoxContainer/Button3]
 @onready var color_rects: Array = [$PanelContainer/HBoxContainer/Button1/ColorRect, $PanelContainer/HBoxContainer/Button2/ColorRect, $PanelContainer/HBoxContainer/Button3/ColorRect]
+@onready var labels: Array = [$PanelContainer/HBoxContainer/Button1/Label, $PanelContainer/HBoxContainer/Button2/Label, $PanelContainer/HBoxContainer/Button3/Label]
 var is_showing = false
 var can_take_next_gun = false
 var int_to_str: Array = ["first", "second", "third", "forth"]
-var attributes_textures: Array = ["", "", "", ""]
+var attributes_textures: Array = ["", "", "", "", "res://Sprites/combat_visor.png", "res://Sprites/metalstorm_lvl1.png", "res://Sprites/weapon_power_lvl1.png", "res://Sprites/charged_bullets.png", "res://Sprites/fire_range_lvl1.png", "res://Sprites/blood_compressor.png", "res://Sprites/healers_nanobots.png", "res://Sprites/pickaxe.png"]
 var commom_attributes = [4, 8, 9, 10, 11]
+var attributes_name_label: Array = ["", "", "", "", 
+"Combat Visor", "Metal Storm", "Weapon Powder", "Charged Bullets", "Rangefinder", "Blood Compressor", "Healers Nanobots", "Hammer"]
+
+var weapons_name_label: Array = ["Gun", "Submachine gun", "Rifle", "Grenade Launcher"]
+var description_attributes: Array = ["average statistics", "high speed\nlow damage", "low speed\nhigh damage", "very low speed\nvery high damage",
+"increased radius exp collection",
+"increased fire rate",
+"increased power rate",
+"increased bullet velocity",
+"increased firing range",
+"increased max health points",
+"increased regeneration rate",
+"increased digging speed"]
 
 
 func _ready():
@@ -41,7 +55,8 @@ func generate_carts():
 					carts_id_in_cart_slots[i] = cart_id
 					is_not_valid = false
 			carts[i].icon = load(player_data.gun_textures[carts_id_in_cart_slots[i]])
-			color_rects[i].color = Color(1, 1, 1, 0)
+			#color_rects[i].color = Color(0.5, 0.5, 0.5, 1)
+			labels[i].text = str(weapons_name_label[carts_id_in_cart_slots[i]])
 		else:
 			while is_not_valid:
 				cart_id = randi() % (player_data.ALL_CART_TYPES-4) + 4
@@ -50,7 +65,8 @@ func generate_carts():
 						target_gun_in_cart_slots[i] = randi() % player_data.enabled_guns
 					carts_id_in_cart_slots[i] = cart_id
 					is_not_valid = false
-			##carts[i].icon = load()
+			carts[i].icon = load(attributes_textures[carts_id_in_cart_slots[i]])
+			labels[i].text = str(attributes_name_label[carts_id_in_cart_slots[i]])
 		#procent_in_cart_slots[i] = randi() % 10
 		var card_level = randi() % 100 + 1
 		if card_level < 61:
@@ -73,10 +89,14 @@ func generate_carts():
 			color_rects[i].color = Color(1, 0, 1, 1)
 		print(carts_id_in_cart_slots[i], " cart ", procent_in_cart_slots[i], " percent ", target_gun_in_cart_slots[i], " target_gun")
 		if target_gun_in_cart_slots[i] != -1:
-			carts[i].text = str(procent_in_cart_slots[i]) + " percent on " + int_to_str[target_gun_in_cart_slots[i]] + " gun"
+			carts[i].text = str(procent_in_cart_slots[i]) + " percent on " + int_to_str[target_gun_in_cart_slots[i]] + " gun \n" + str(description_attributes[carts_id_in_cart_slots[i]])
 		else:
 			#color_rects[i].color = Color(1, 1, 1, 0)
-			carts[i].text = str(procent_in_cart_slots[i]) + " percent"
+			if carts_id_in_cart_slots[i] < 4:
+				carts[i].text = str(description_attributes[carts_id_in_cart_slots[i]])
+				color_rects[i].color = Color(1, 1, 1, 0)
+			else:
+				carts[i].text = str(procent_in_cart_slots[i]) + " percent \n" + str(description_attributes[carts_id_in_cart_slots[i]])
 
 
 func toggle_buttons_state():
