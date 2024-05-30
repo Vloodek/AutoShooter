@@ -2,6 +2,7 @@ extends Area2D
 
 var experience = 0
 @onready var player = get_tree().get_first_node_in_group("player")
+@onready var pickXp = get_tree().get_first_node_in_group("exp")
 
 
 func _ready():
@@ -26,4 +27,5 @@ func _on_area_entered(area):
 		#player_data.collector_range_scale += 0.1
 		#player.update_stats()
 		player_data.add_experience(experience)
+		pickXp.play()
 		queue_free()

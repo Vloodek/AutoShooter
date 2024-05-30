@@ -19,6 +19,14 @@ var input_movement = Vector2()
 @onready var bullet_points: Array = [$gun_handler1/bullet_point, $gun_handler2/bullet_point, $gun_handler3/bullet_point, $gun_handler4/bullet_point]
 #@onready var fire_timer = $fire_timer
 @onready var ground = get_node("../ground")
+@onready var wall_break = get_node("../wallBreak")
+@onready var shoot_sound = get_node("../shootSound")
+@onready var explode_sound = get_node("../explodeSound")
+@onready var player_death = get_node("../playerDeath")
+var is_played = false
+
+#@onready var zDeath3 = get_node("../explodeSound")
+#@onready var zDeathBoss = get_node("../explodeSound")
 
 @onready var walls_to_check_break: Array
 var pos
@@ -102,7 +110,11 @@ func die():
 	for gun in guns:
 		gun.visible = false
 	$anim.play("Dead")
-	await get_tree().create_timer(2).timeout
+	if is_played == false:
+		player_death.play()
+		is_played = true
+		
+	# Ожидаем завершения звука
 	$anim.pause()
 	$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
 	get_node("../GUI/YOU_ARE_DEAD").visible = true
@@ -194,6 +206,8 @@ func instance_bullet(bullet_point, gun, index):
 	bullet.power = player_data.gun_bullet_power[index]
 	bullet.knockback_strength = player_data.gun_bullet_knockback_strength[index]
 	get_tree().root.add_child(bullet)
+	bullet.explode_sound = explode_sound
+	shoot_sound.play()
 
 
 func reset_states():
@@ -245,7 +259,7 @@ func _on_hitbox_area_entered(area):
 		player_data.health -= area.damage
 
 
-func flash():
+func flash(): #эффект 
 	$Sprite2D.material.set_shader_parameter("flash_modifer", 1)
 	await get_tree().create_timer(0.3).timeout
 	$Sprite2D.material.set_shader_parameter("flash_modifer", 0)
@@ -355,6 +369,7 @@ func _on_break_timer_timeout():
 						ground.set_cell(0, obj[1], 0, Vector2i(4, 7))
 						walls_to_break.erase(obj)
 						obj[2].queue_free()
+						wall_break.play()
 						is_at_least_one_erase = true
 				if !is_at_least_one_erase:
 					#body.erase_cell(0, collision_position)
@@ -362,6 +377,7 @@ func _on_break_timer_timeout():
 					var particle = break_particle_scene.instantiate()
 					particle.global_position =  body.map_to_local(collision_position)
 					get_tree().root.add_child(particle)
+					wall_break.play()
 					walls_to_break.append([body, collision_position, particle])
 
 			#for obj in walls_to_break:

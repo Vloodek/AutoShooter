@@ -15,8 +15,15 @@ var xp_drop = 0
 var xp_color = Color(1, 1, 1, 1)
 var damage = 1
 var is_it_boss = false
+var is_played = false
+
 @onready var target = get_node("../Player")
 @onready var exit = get_node("../exit")
+
+@onready var zDeath1 = get_node("../deathSound")
+@onready var zDeath2 = get_node("../zDeath2")
+@onready var zDeath3 = get_node("../zDeath3")
+@onready var zDeathBoss = get_node("../zDeathBoss")
 # Called when the node enters the scene tree for the first time.
 var time_since_last_call: float = 0.0
 var need_to_apply_knockback = false
@@ -106,6 +113,18 @@ func _on_hitbox_area_entered(area):
 		if HP <= 0:
 			instance_experience()
 			instance_fx()
+			
+			if is_played == false:
+				match xp_drop:
+					15:
+						zDeath1.play()
+					70:
+						zDeath2.play()
+					150:
+						zDeath3.play()
+					1000:
+						zDeathBoss.play()
+				is_played = true
 			queue_free()
 			if is_it_boss:
 				exit.is_available = true

@@ -8,6 +8,9 @@ var player
 @onready var carts: Array = [$PanelContainer/HBoxContainer/Button1, $PanelContainer/HBoxContainer/Button2, $PanelContainer/HBoxContainer/Button3]
 @onready var color_rects: Array = [$PanelContainer/HBoxContainer/Button1/ColorRect, $PanelContainer/HBoxContainer/Button2/ColorRect, $PanelContainer/HBoxContainer/Button3/ColorRect]
 @onready var labels: Array = [$PanelContainer/HBoxContainer/Button1/Label, $PanelContainer/HBoxContainer/Button2/Label, $PanelContainer/HBoxContainer/Button3/Label]
+@onready var show_sound = $showSound
+@onready var hide_sound = $hideSound
+
 var is_showing = false
 var can_take_next_gun = false
 var int_to_str: Array = ["first", "second", "third", "forth"]
@@ -35,6 +38,7 @@ func _ready():
 
 func show_screen():
 	generate_carts()
+	show_sound.play()
 	is_showing = true
 	get_tree().paused = true  # Устанавливаем паузу в игре
 	toggle_buttons_state()
@@ -110,6 +114,7 @@ func choose_cart(slot_id):
 		can_take_next_gun = false
 	player.update_stats(carts_id_in_cart_slots[slot_id], procent_in_cart_slots[slot_id])
 	toggle_buttons_state()
+	hide_sound.play()
 	hide_screen()
 
 
@@ -133,3 +138,11 @@ func _on_button_2_pressed():
 
 func _on_button_3_pressed():
 	choose_cart(2)
+
+
+func _on_survive_stage_finished():
+	$surviveStage.play() # Replace with function body.
+
+
+func _on_boss_stage_finished():
+	$surviveStage.play()  # Replace with function body.

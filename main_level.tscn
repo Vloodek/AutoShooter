@@ -1,10 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://csj7vjqynno5n"]
+[gd_scene load_steps=17 format=3 uid="uid://csj7vjqynno5n"]
 
 [ext_resource type="Script" path="res://Levels/level_generator_scripts/main_room.gd" id="1_q80c4"]
 [ext_resource type="Script" path="res://UI/ui_scripts/GUI.gd" id="3_idno8"]
 [ext_resource type="Texture2D" uid="uid://di30pfh8x3emn" path="res://Sprites/HeartSpriteSheet.png" id="3_kf2lp"]
 [ext_resource type="PackedScene" uid="uid://4caganixe3qx" path="res://UI/Scenes/upgrade_screen.tscn" id="6_6v3cy"]
+[ext_resource type="AudioStream" uid="uid://0rwuf0dv21qh" path="res://sounds/fx/explode.ogg" id="6_112qh"]
 [ext_resource type="Texture2D" uid="uid://bje2ewbg4hoqo" path="res://Sprites/walls.png" id="7_eh6sh"]
+[ext_resource type="AudioStream" uid="uid://dolmp8bssud7" path="res://sounds/fx/zomb1.ogg" id="7_l4huu"]
+[ext_resource type="AudioStream" uid="uid://dvb71f6d6b005" path="res://sounds/fx/wall.ogg" id="7_nx2jb"]
+[ext_resource type="AudioStream" uid="uid://b06ghrapyww84" path="res://sounds/fx/fire.ogg" id="8_kjc3m"]
+[ext_resource type="AudioStream" uid="uid://dqr3aq5gb3m55" path="res://sounds/fx/zomb2.ogg" id="10_ds6g3"]
+[ext_resource type="AudioStream" uid="uid://cu8le4n8exlt8" path="res://sounds/fx/zomb7.ogg" id="11_vcwxl"]
+[ext_resource type="AudioStream" uid="uid://co72wr2wnb2vu" path="res://sounds/fx/exp.ogg" id="12_n7p7j"]
+[ext_resource type="AudioStream" uid="uid://bjttv25a8vab5" path="res://sounds/fx/die3.wav" id="13_g6yrb"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bnwbg"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -416,6 +424,41 @@ autostart = true
 
 [node name="TimerLevel" type="Timer" parent="."]
 autostart = true
+
+[node name="explodeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_112qh")
+bus = &"fx"
+
+[node name="deathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_l4huu")
+bus = &"fx"
+
+[node name="wallBreak" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_nx2jb")
+bus = &"fx"
+
+[node name="shootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_kjc3m")
+bus = &"fx"
+
+[node name="zDeath2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ds6g3")
+bus = &"fx"
+
+[node name="zDeath3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_vcwxl")
+bus = &"fx"
+
+[node name="zDeathBoss" type="AudioStreamPlayer" parent="."]
+
+[node name="pickXp" type="AudioStreamPlayer" parent="." groups=["exp"]]
+stream = ExtResource("12_n7p7j")
+bus = &"fx"
+
+[node name="playerDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_g6yrb")
+volume_db = -5.18
+bus = &"fx"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCheckReload" to="." method="_on_timer_check_reload_timeout"]

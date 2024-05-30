@@ -1,12 +1,13 @@
-res://UI/Scenes/main_menu.tscn
+res://main_level.tscn
 res://Entities/Entities Scripts/player.gd
 res://UI/ui_scripts/main_menu.gd
 res://Shaders/hurt.gdshader
 res://UI/Scenes/upgrade_screen.gdshader
-res://main_level.tscn
+res://UI/ui_scripts/upgrade_screen.gd
 res://Entities/Scenes/Player/player.tscn
 res://Entities/Scenes/Enemies/enemy_1.tscn
 res://Entities/Scenes/Bullets/bullet_1.tscn
+res://UI/Scenes/main_menu.tscn
 res://UI/Scenes/loading_screen.tscn
 res://UI/Scenes/upgrade_screen.tscn
 res://Interactables/scenes/exp.tscn
@@ -15,5 +16,4 @@ res://Entities/particle.tscn
 res://Entities/break_particle.tscn
 res://UI/Scenes/end_menu.tscn
 res://Entities/dead_area.tscn
-res://Entities/Scenes/FX/fx_scene.tscn
 res://Levels/level_generator_scripts/main_room.gd

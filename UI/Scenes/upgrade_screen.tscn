@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://4caganixe3qx"]
+[gd_scene load_steps=11 format=3 uid="uid://4caganixe3qx"]
 
 [ext_resource type="Script" path="res://UI/ui_scripts/upgrade_screen.gd" id="1_2c5dt"]
 [ext_resource type="Shader" path="res://UI/Scenes/upgrade_screen.gdshader" id="2_6st66"]
+[ext_resource type="AudioStream" uid="uid://dbd3w5k5njc3s" path="res://sounds/fx/idk2.ogg" id="3_4ds3t"]
+[ext_resource type="AudioStream" uid="uid://cxyv2e7wglikw" path="res://sounds/fx/idk1.ogg" id="4_omaxb"]
+[ext_resource type="AudioStream" uid="uid://bje5x7bsja7jn" path="res://sounds/background/liveInHell.mp3" id="5_acmmt"]
+[ext_resource type="AudioStream" uid="uid://dwd8xxfhut03v" path="res://sounds/background/BeatThemUp.mp3" id="6_uf745"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_08k0c"]
 shader = ExtResource("2_6st66")
@@ -225,7 +229,26 @@ libraries = {
 "": SubResource("AnimationLibrary_fd661")
 }
 
+[node name="showSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4ds3t")
+bus = &"fx"
+
+[node name="hideSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_omaxb")
+bus = &"fx"
+
+[node name="surviveStage" type="AudioStreamPlayer" parent="." groups=["survStage"]]
+stream = ExtResource("5_acmmt")
+autoplay = true
+bus = &"bg"
+
+[node name="bossStage" type="AudioStreamPlayer" parent="." groups=["bossStage"]]
+stream = ExtResource("6_uf745")
+bus = &"bg"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Button1" to="." method="_on_button_1_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="finished" from="surviveStage" to="." method="_on_survive_stage_finished"]
+[connection signal="finished" from="bossStage" to="." method="_on_boss_stage_finished"]

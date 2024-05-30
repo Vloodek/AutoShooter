@@ -5,6 +5,9 @@ class_name MainLevel
 @onready var player_scene = preload("res://Entities/Scenes/Player/player.tscn")
 @onready var enemy_scene = preload("res://Entities/Scenes/Enemies/enemy_1.tscn")
 @onready var end_menu = preload("res://UI/Scenes/end_menu.tscn") as PackedScene
+#@onready var player_death = $playerDeath
+@onready var boss_stage = get_tree().get_first_node_in_group("bossStage")
+@onready var survive_stage = get_tree().get_first_node_in_group("survStage")
 
 @export var borders = Rect2(1,1,100,52)
 @export var grid_map_size = 16
@@ -206,6 +209,9 @@ func _on_timer_timeout():
 		$TimerLevel.start()
 		print("spawned")
 		$GUI/goal_mission.text = "Kill the boss and find the exit!"
+		survive_stage.stop()
+		boss_stage.play()
+		
 	elif number_timeout * timer.wait_time > level_timeout + time_to_defeat_boss:
 		if get_tree().get_nodes_in_group("enemy_1").size() < max_number_enemy:
 			instance_enemy(enemy_difficult.hard, player.position, 20)
